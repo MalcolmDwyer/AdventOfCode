@@ -22,11 +22,9 @@ zazbzb[bzb]cdb
 
 // input = testInput;
 
-reg = /^$/;
 let lines = input.split('\n').filter(a => a.length);//.slice(0, 20);
 // console.log(lines);
 
-// let segments = reg.exec(lines)
 let segmentsList = lines.map(line => {
   return line.split(/[\[\]]/)
 })
