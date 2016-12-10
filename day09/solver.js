@@ -10,8 +10,13 @@ let testInput = `(11x2)(5x3)ABCDEFGHIJKL(5x4)MNOPQRSTUVWXYZ`
 testInput = `
 (3x3)XYZ
 X(8x2)(3x3)ABCY
+A(2x2)BCD(2x2)EFG
+(27x12)(20x12)(13x14)(7x10)(1x12)A
+(25x3)(3x3)ABC(2x3)XY(5x2)PQRSTX(18x9)(3x2)TWO(5x7)SEVEN
 `
-
+// testInput = 'X(8x2)(3x3)ABCY'
+// testInput = '(25x3)(3x3)ABC(2x3)XY(5x2)PQRSTX(18x9)(3x2)TWO(5x7)SEVEN'
+testInput = '(8x10)SBTLHXZP(141x10)(20x4)PSFDROQLSZCXJYTATIBY(2x9)NN(60x14)(3x15)WUO(2x13)WF(10x14)KRXBNHFEGQ(20x4)SWJUMHNRCRJUPDVFAKMI(35x8)(3x14)VZB(8x15)SWKZSEFU(7x1)FZTLTXZ'
 input = testInput;
 
 let lines = input.split('\n').filter(a => a.length);
@@ -27,6 +32,143 @@ let lines = input.split('\n').filter(a => a.length);
 // console.log(t)
 // console.log(foo)
 // console.log(input.split(/[^]/).join(''))
+
+// console.log = () => {}
+
+
+lines.map(l => {
+  console.log('---------------------------------------------------');
+  console.log('line: ' + l);
+  let output = '';
+  let count = 0;
+  let groupSize = 0;
+  let n = 0;
+  // (Size x N)
+  let accN = false;
+  let accSize = false;
+
+
+  let groupedStack = l.split(/[\(\)x]+/).reduce((stack, c, ix) => {
+    if (!c) {
+      return stack;
+    }
+    if (isFinite(c)) {
+      let n = parseInt(c, 10)
+      if (
+        stack.length && stack[stack.length - 1] &&
+        stack[stack.length - 1].size &&
+        !stack[stack.length - 1].N
+      ) {
+        stack[stack.length-1].N = n
+
+        stack[stack.length-1].w = 3 + // (,x,)
+          String(n).length + // N char length
+          String(stack[stack.length - 1].size).length; // Size char length
+      }
+      else {
+        stack.push({
+          size: n
+        });
+      }
+    }
+    else {
+      // stack = stack.concat(c.split('').map(z => {return {c:  z}}));
+      // stack = stack.concat(c.split(''));
+      stack.push({
+        c: c.length,
+        s: c
+      })
+    }
+    console.log('segment: ' + c);
+    return stack;
+  }, []);
+
+  console.log(groupedStack)
+
+  let multStack = [];
+  let error = false;
+  count = groupedStack.reduce((tally, block) => {
+    if (error) {
+      return;
+    }
+    console.log('');
+    console.log('-----------------------------------------------------------------');
+    console.log('');
+
+    if (block && block.size && block.N) {
+      multStack.push(block);
+      console.log(multStack);
+    }
+    else {
+      let mult = multStack.map(m => m.N).reduce((p, m) => p*m, 1);
+
+      if (mult > 1) {
+        let charSliceLength = multStack[multStack.length-1].size
+        console.log('-----adding ' + mult + ' * ' + charSliceLength + '  (' + block.s.slice(0, charSliceLength) + ')');
+        tally += mult * (charSliceLength);
+
+        // if (charSliceLength < block.c) {
+        //   ''
+        // }
+        let diff = block.c - charSliceLength;
+        if (diff) {
+          console.log('-----adding ' + diff + ' for remaining ' + block.s.slice(charSliceLength));
+          tally += diff;
+        }
+
+      }
+      else {
+        console.log('-----adding ' + block.c  + '       direct group')
+        tally += block.c;
+      }
+
+
+      // multStack = multStack.map(m => {
+      //   return Object.assign({}, m, {
+      //     size: m.size -
+      //   })
+      // });
+
+      console.log('multStack before');
+      console.log(multStack);
+
+      for (let i=0; i < multStack.length; i++) {
+        let restStackWidth = multStack.slice(i + 1).reduce((red, m) => {
+          return red + m.w;
+        }, 0);
+        console.log('restStackWidth: ' + restStackWidth)
+        multStack[i].size = multStack[i].size -
+          restStackWidth -
+          multStack[multStack.length - 1].size
+      }
+
+      console.log('multStack mid');
+      console.log(multStack);
+
+      // while(multStack.length && multStack[0].size === 0) {
+      //   multStack.shift()
+      // }
+      if (multStack.some(m => m.size < 0)) {
+        console.error('Negative stack size ?');
+        error = true;
+      }
+      multStack = multStack.filter(m => m.size > 0)
+
+      console.log('multStack after');
+      console.log(multStack);
+    }
+    console.log('  tally: ' + tally);
+    return tally;
+  }, 0);
+
+  console.info('count: ' + count);
+});
+
+// too low: 1913838552
+
+
+
+
 
 
 // Part 1:
