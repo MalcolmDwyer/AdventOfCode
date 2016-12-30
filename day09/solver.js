@@ -25,7 +25,7 @@ A(2x2)BCD(2x2)EFG
 // testInput = 'X(8x2)(3x3)ABCY'
 // testInput = '(25x3)(3x3)ABC(2x3)XY(5x2)PQRSTX(18x9)(3x2)TWO(5x7)SEVEN'
 // testInput = '(8x10)SBTLHXZP(141x10)(20x4)PSFDROQLSZCXJYTATIBY(2x9)NN(60x14)(3x15)WUO(2x13)WF(10x14)KRXBNHFEGQ(20x4)SWJUMHNRCRJUPDVFAKMI(35x8)(3x14)VZB(8x15)SWKZSEFU(7x1)FZTLTXZ'
-input = testInput;
+// input = testInput;
 
 // let lines = input.split('\n').filter(a => a.length);
 let lines = utils.lines(input);

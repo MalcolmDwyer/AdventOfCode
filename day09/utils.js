@@ -41,77 +41,74 @@ const stackReducer = ({tally, multStack}, block) => {
 
 
   if (block && block.size && block.N) {
-    console.log('Taking block: ', block, ' <<<<<<<<<<<<<<<<<<');
+    // console.log('Taking block: ', block, ' <<<<<<<<<<<<<<<<<<');
     multStack.push(block);
-    console.log(multStack);
+    // console.log(multStack);
   }
   else {
     console.log('')
     console.log('-------')
     console.log('Reached char block: ', block);
-    console.log('|++++++')
-    console.log(multStack)
-    console.log('|++++++')
-    // if (!multStack.length) {
-    //   console.log('No stack: += ' + block.c)
-    //   tally += block.c;
-    //   return {tally, multStack};
-    // }
+    if (multStack && multStack.length) {
+      console.log(multStack)
+      console.log('')
+    }
 
 
     let mult = multStack.map(m => m.N).reduce((p, m) => p*m, 1);
 
-    let newMultStack = multStack.reduceRight((newStack, block2, ix) => {
-      console.log('reducing ', block2);
-      console.log(`mult: ${mult}`)
+    for (let ix = multStack.length - 1; ix >= 0; ix--) {
+
+      if (block.c <= 0) {
+        break;
+      }
+      let block2 = multStack[ix];
+      // console.log('reducing ', block2);
+      // console.log(`mult: ${mult}`)
       let charSliceLength = block2.size
-      if (block2.size > block.c) {
-        ///...
-        console.log(' ++++++ ' , block2);
-        newStack.shift(block2);
-      }
-      else {
-        if (block2.size) {
-          const diff = Math.max(0, (block.c - block2.size));
 
-          console.log('retiring ', block2);
-          let stackSubtract = block2.w + block2.size;
+      if (block2.size) {
+        const diff = Math.max(0, (block.c - block2.size));
+
+        block2.done = true;
+        // console.log('retiring ', block2);
+        let stackSubtract = block2.w + block2.size;
 
 
-          tally += mult * block2.size;
-          console.log(`updating tally += ${mult} * ${block2.size}} => ${tally}`);
+        tally += mult * block2.size;
+        console.log(`updating tally += ${mult} * ${block2.size}} => ${tally}`);
 
-          mult = mult/block2.N;
-          block.c -= block2.size;
-          console.log(`--> mult: ${mult}, block.c: ${block.c}, ix: ${ix}`)
+        mult = mult/block2.N;
+        block.c -= block2.size;
+        // console.log(`--> mult: ${mult}, block.c: ${block.c}, ix: ${ix}`)
 
-          for (let i = ix-1; i >= 0; i--) {
-            console.log(`[${i}] updating stack by subtracting ${stackSubtract}`);
-            multStack[i].size -= stackSubtract;
-            console.log(`multStack[${i}].size <= ${multStack[i].size}`)
-            if (multStack[i].size === 0) {
-              stackSubtract += multStack[i].w;
-              console.log(` --> retiring ${i} stackSubtract: ${stackSubtract}`)
-            }
-            if (multStack[i].size < 0) {
-              console.error(`ERROR!!!!!!!!!`)
-            }
+        for (let i = ix-1; i >= 0; i--) {
+          // console.log(`[${i}] updating stack by subtracting ${stackSubtract}`);
+          multStack[i].size -= stackSubtract;
+          // console.log(`multStack[${i}].size <= ${multStack[i].size}`)
+          if (multStack[i].size === 0) {
+            stackSubtract += multStack[i].w;
+            // console.log(` --> retiring ${i} stackSubtract: ${stackSubtract}`)
+            // multStack.pop();
+            // multStack = multStack.filter(s => s != multStack[i])
+            block2.done = true;
           }
-          newStack.shift(block2)
+          if (multStack[i].size < 0) {
+            console.error(`ERROR!!!!!!!!!`)
+            break;
+          }
         }
-        // else {
-        //   console.log('updating tally with remaining length: ' + block.c)
-        //   tally += block.c;
-        // }
       }
-      console.log('newStack: ', newStack);
-      return newStack;
-    }, []);
+    }
 
-    multStack = newMultStack;
+    multStack = multStack.filter(s => !s.done && (s.size > 0))
+    // multStack = newMultStack;
+    // console.log('| New multStack:')
+    // console.log(multStack)
+    // console.log('|------------------------------------')
 
-    if (!multStack.length) {
-      console.log('No stack: += ' + block.c)
+    if (!multStack.length && block.c) {
+      // console.log('No stack: += ' + block.c)
       tally += block.c;
       return {tally, multStack};
     }
