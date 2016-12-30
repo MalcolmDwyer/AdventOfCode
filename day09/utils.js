@@ -89,11 +89,10 @@ const stackReducer = ({tally, multStack}, block) => {
           if (multStack[i].size === 0) {
             stackSubtract += multStack[i].w;
             // console.log(` --> retiring ${i} stackSubtract: ${stackSubtract}`)
-            // multStack.pop();
-            // multStack = multStack.filter(s => s != multStack[i])
             block2.done = true;
           }
           if (multStack[i].size < 0) {
+            // Shouldn't happen...
             console.error(`ERROR!!!!!!!!!`)
             break;
           }
@@ -102,10 +101,6 @@ const stackReducer = ({tally, multStack}, block) => {
     }
 
     multStack = multStack.filter(s => !s.done && (s.size > 0))
-    // multStack = newMultStack;
-    // console.log('| New multStack:')
-    // console.log(multStack)
-    // console.log('|------------------------------------')
 
     if (!multStack.length && block.c) {
       // console.log('No stack: += ' + block.c)
@@ -137,9 +132,6 @@ const counter = line => {
   let count = decodeCount(groupedStack);
   console.log(count);
 }
-
-
-
 
 module.exports = {
   lines,
