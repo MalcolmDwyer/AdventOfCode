@@ -1,4 +1,5 @@
 var fs = require('fs');
+var utils = require('./utils')
 
 require.extensions['.txt'] = function (module, filename) {
     module.exports = fs.readFileSync(filename, 'utf8');
@@ -10,17 +11,26 @@ let testInput = `(11x2)(5x3)ABCDEFGHIJKL(5x4)MNOPQRSTUVWXYZ`
 testInput = `
 (3x3)XYZ
 X(8x2)(3x3)ABCY
+X(9x2)(3x3)ABCD
+X(9x2)(3x3)ABCDY
 A(2x2)BCD(2x2)EFG
 (27x12)(20x12)(13x14)(7x10)(1x12)A
 (25x3)(3x3)ABC(2x3)XY(5x2)PQRSTX(18x9)(3x2)TWO(5x7)SEVEN
 `
+
+// testInput = 'X(8x2)(3x3)ABCY'
+
+// testInput = '(25x3)(3x3)ABC(2x3)XY(5x2)PQRSTX(18x9)(3x2)TWO(5x7)SEVEN'
+
 // testInput = 'X(8x2)(3x3)ABCY'
 // testInput = '(25x3)(3x3)ABC(2x3)XY(5x2)PQRSTX(18x9)(3x2)TWO(5x7)SEVEN'
-testInput = '(8x10)SBTLHXZP(141x10)(20x4)PSFDROQLSZCXJYTATIBY(2x9)NN(60x14)(3x15)WUO(2x13)WF(10x14)KRXBNHFEGQ(20x4)SWJUMHNRCRJUPDVFAKMI(35x8)(3x14)VZB(8x15)SWKZSEFU(7x1)FZTLTXZ'
+// testInput = '(8x10)SBTLHXZP(141x10)(20x4)PSFDROQLSZCXJYTATIBY(2x9)NN(60x14)(3x15)WUO(2x13)WF(10x14)KRXBNHFEGQ(20x4)SWJUMHNRCRJUPDVFAKMI(35x8)(3x14)VZB(8x15)SWKZSEFU(7x1)FZTLTXZ'
 input = testInput;
 
-let lines = input.split('\n').filter(a => a.length);
+// let lines = input.split('\n').filter(a => a.length);
+let lines = utils.lines(input);
 
+// console.log(lines.length)
 // console.log(lines[0].length)
 
 // let stuff = [t, ...foo] = /\(([0-9]+)x([0-9]+)*\)/.exec(lines[0]);
@@ -35,10 +45,38 @@ let lines = input.split('\n').filter(a => a.length);
 
 // console.log = () => {}
 
-
 lines.map(l => {
+
+  utils.counter(l);
+  return;
+
+  //////////////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////////////////
+
+
+
+
+  console.log(`
+
+
+
+
+`)
   console.log('---------------------------------------------------');
-  console.log('line: ' + l);
+  // console.log('line: ' + l);
   let output = '';
   let count = 0;
   let groupSize = 0;
@@ -60,7 +98,7 @@ lines.map(l => {
         !stack[stack.length - 1].N
       ) {
         stack[stack.length-1].N = n
-
+        stack[stack.length-1].orig = `(${stack[stack.length - 1].size}x${n})`
         stack[stack.length-1].w = 3 + // (,x,)
           String(n).length + // N char length
           String(stack[stack.length - 1].size).length; // Size char length
@@ -79,7 +117,7 @@ lines.map(l => {
         s: c
       })
     }
-    console.log('segment: ' + c);
+    // console.log('segment: ' + c);
     return stack;
   }, []);
 
@@ -87,6 +125,58 @@ lines.map(l => {
 
   let multStack = [];
   let error = false;
+  count = groupedStack.reduce((tally, block) => {
+
+    if (block && block.size && block.N) {
+      console.log('Taking block: ', block, ' <<<<<<<<<<<<<<<<<<');
+      multStack.push(block);
+      console.log(multStack);
+    }
+    else {
+      let mult = multStack.map(m => m.N).reduce((p, m) => p*m, 1);
+      console.log(`mult: ${mult}`)
+      if (mult > 1) {
+        let charSliceLength = multStack[multStack.length-1].size
+        tally += mult * (charSliceLength);
+      }
+      else {
+        console.log(`-----adding ${block.c} (${block.s})  direct group`)
+        tally += block.c;
+      }
+    }
+
+    return tally;
+  }, 0);
+
+  console.log('count: ' + count);
+
+return;
+
+//////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////
+
+
+
+
+
+
+
+
+  // let multStack = [];
+  // let error = false;
   count = groupedStack.reduce((tally, block) => {
     if (error) {
       return;
@@ -96,6 +186,7 @@ lines.map(l => {
     console.log('');
 
     if (block && block.size && block.N) {
+      console.log('Taking block: ', block, ' <<<<<<<<<<<<<<<<<<');
       multStack.push(block);
       console.log(multStack);
     }
@@ -107,6 +198,10 @@ lines.map(l => {
         console.log('-----adding ' + mult + ' * ' + charSliceLength + '  (' + block.s.slice(0, charSliceLength) + ')');
         tally += mult * (charSliceLength);
 
+        multStack[multStack.length-1].done = true;
+
+        console.log('Retiring block ', multStack[multStack.length-1], ' >>>>>>>>>>>>>>>>>>>>>>')
+
         // if (charSliceLength < block.c) {
         //   ''
         // }
@@ -115,7 +210,6 @@ lines.map(l => {
           console.log('-----adding ' + diff + ' for remaining ' + block.s.slice(charSliceLength));
           tally += diff;
         }
-
       }
       else {
         console.log('-----adding ' + block.c  + '       direct group')
@@ -133,14 +227,39 @@ lines.map(l => {
       console.log(multStack);
 
       for (let i=0; i < multStack.length; i++) {
-        let restStackWidth = multStack.slice(i + 1).reduce((red, m) => {
-          return red + m.w;
+        let restStackWidth = multStack.slice(i + 1).reduceRight((red, m) => {
+          if (m.done || m.size === 0) {
+            return red + m.w;
+          }
+          else {
+            return red;
+          }
         }, 0);
-        console.log('restStackWidth: ' + restStackWidth)
+        console.log(`[${i}] restStackWidth: ${restStackWidth}`)
         multStack[i].size = multStack[i].size -
           restStackWidth -
           multStack[multStack.length - 1].size
       }
+
+      // multStack = multStack.reduceRight((red1, block) => {
+      //
+      // })
+
+      // for (let i = multStack.length - 1; i >= 0; i--) {
+      //   let restStackWidth = multStack.slice(i + 1).reduceRight((red, m) => {
+      //     if (m.done || m.size === 0) {
+      //       // return red + m.w;
+      //       return red + m.w;
+      //     }
+      //     else {
+      //       return red;
+      //     }
+      //   }, 0);
+      //   console.log('restStackWidth: ' + restStackWidth)
+      //   multStack[i].size = multStack[i].size -
+      //     restStackWidth -
+      //     multStack[multStack.length - 1].size
+      // }
 
       console.log('multStack mid');
       console.log(multStack);
