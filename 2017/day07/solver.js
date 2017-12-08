@@ -43,12 +43,6 @@ const solver = (lines) => {
     return nodeTotalWeight;
   }
 
-  const nodeImbalance = node => {
-    if (!node.get(children)) {
-      return 0
-    }
-  }
-
   const findImbalance = (nodeIm, diff) => {
     let childNodes = nodeIm.get('children').map(childName => nodes.get(childName));
     let groupedByWeights = childNodes.groupBy(c => c.get('total'))
