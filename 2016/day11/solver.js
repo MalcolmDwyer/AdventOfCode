@@ -17,11 +17,25 @@ let realGoal = Immutable.fromJS(
   [4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4]
 );
 
-let [labels, input, goal] = [testLabels, testInput, testGoal];
+// Part2 ... add elerium and dilithium to first floor
+let realLabels2 = ['S', 'P', 'T', 'R', 'C', 'E', 'D'];
+let realInput2 = Immutable.fromJS(
+  [1, 1, 1, 1, 1, 2, 3, 2, 2, 2, 2, 1, 1, 1, 1]
+)
+let realGoal2 = Immutable.fromJS(
+  [4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4]
+);
+
+
+// let [labels, input, goal] = [testLabels, testInput, testGoal];
 // let [labels, input, goal] = [realLabels, realInput, realGoal];
+let [labels, input, goal] = [realLabels2, realInput2, realGoal2];
 
-let nodePrinter = node => {
+let nodePrinter = (node, ix) => {
 
+  if (typeof ix !== 'undefined') {
+    console.log('------------------------ step ', ix)
+  }
   [4,3,2,1].forEach(f => {
     let str = 'F' + f + ' ';
     str += (node.get(0) === f) ? ' E  ' : '    ';
@@ -66,12 +80,14 @@ let distance = (a,b) => {
   const aFloors = itemFloor(a);
   const bFloors = itemFloor(b);
   aFloors.forEach((f, ix) => {
-    cost += Math.abs(f - bFloors[ix])
+    // cost += Math.abs(f - bFloors[ix])
+    cost += Math.abs(f - bFloors.get(ix))
   })
   return cost;
 }
 
 let heuristic = node => {
+  // console.log('     heuristic:' , node.toJS(), distance(node, goal))
   return distance(node, goal)
 }
 
@@ -104,6 +120,11 @@ let neighbor = node => {
   // console.log('');
   // console.log('neighbor()==============================');
   // console.log(node.toJS());
+  // if (node.equals(Immutable.List([3, 4, 4, 3, 3]))) {
+  //   console.log('FOUND ************************************************************')
+  // }
+  // nodePrinter(node)
+  // console.log('=============')
   // Elevator up/down:
   let neighbors = [];
   // const floors = itemFloor(node);
@@ -122,6 +143,7 @@ let neighbor = node => {
         newNode2 = newNode2.set(combo[1], newFloor);
       }
       if (nodeIsValid(newNode2)) {
+        // console.log(' ---> adding neighbors', newNode2.toJS())
         neighbors.push(newNode2)
       }
     });
@@ -159,6 +181,7 @@ console.log('status: ' + status);
 
 if (status == 'success') {
   path.map(nodePrinter);
+  path.map(node => console.log(node.toJS()))
   console.log();
   console.log('steps: ' + (path.length - 1));
 }
