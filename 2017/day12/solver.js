@@ -13,9 +13,7 @@ const lines = input => input
 const solver = (input) => {
   let allSets = Immutable.List();
 
-  let prevSetSize = -1;
   let prevAllSets = -1;
-  let iter = 0;
 
   let nodesList = input.map(pipe => {
     let parts = /^([0-9-]*) <-> ([0-9, ]*)*$/.exec(pipe)
@@ -26,31 +24,27 @@ const solver = (input) => {
     return nodes
   })
 
-  while (!allSets.equals(prevAllSets) || !iter) {
-    prevAllSets = allSets
+  nodesList.forEach((nodes, ix) => {
+    if (!allSets.find(set => nodes.some(n => set.has(n)))) {
+      // Create a new set
+      allSets = allSets.push(Immutable.Set(nodes))
+    }
+    else {
+      // Find all related nodes
+      let allLinkedNodesSet =
+        allSets
+          .filter(set => nodes.some(n => set.has(n)))
+          .reduce((all, set) => all.union(set), Immutable.Set())
+          .union(nodes)
 
-    nodesList.forEach((nodes, ix) => {
-      let pix = allSets.findIndex(set => nodes.some(n => set.has(n)))
+      // Clear any existing sets with those numbers, then add a new set with all of them
+      allSets = allSets
+        .filter(set => !set.some(n => allLinkedNodesSet.has(n)))
+        .push(allLinkedNodesSet)
+    }
+  })
 
-      if (pix < 0) {
-        allSets = allSets.push(Immutable.Set(nodes))
-      }
-      else {
-        let allLinkedNodesSet =
-          allSets
-            .filter(set => nodes.some(n => set.has(n)))
-            .reduce((all, set) => all.union(set), Immutable.Set())
-            .union(nodes)
-
-        allSets = allSets
-          .filter(set => !set.some(n => allLinkedNodesSet.has(n)))
-          .push(allLinkedNodesSet)
-      }
-    })
-    iter++
-  }
-
-  console.log('zeroSet size:', allSets.find(set => set.has(0)).size)
-  console.log('allSets:', allSets.size)
+  console.log('Zero Group size:', allSets.find(set => set.has(0)).size)
+  console.log('# of Groups:', allSets.size)
 }
 solver(lines(input))
