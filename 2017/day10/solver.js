@@ -17,7 +17,7 @@ const lines = input => input
 
 const parts = line => line.split(',').map(v => parseInt(v, 10))
 
-const solver2 = (list, _ring) => {
+const solver1b = (list, _ring) => {
   let pc = 0;
   let skip = 0;
   let ring = Immutable.List(_ring)
@@ -48,20 +48,20 @@ const solver2 = (list, _ring) => {
   console.log(ring.get(totalRot) * ring.get(totalRot + 1))
 }
 
-const solver = (list, _ring) => {
+const solver = (list, _ring, pc = 0, skip = 0) => {
   // console.log('list', list)
   // console.log('ring', _ring)
 
-  let pc = 0;
-  let skip = 0;
+  // pc = 0;
+  // skip = 0;
   let ring = Immutable.List(_ring)
 
   list.forEach(size => {
-    console.log('')
     // console.log('')
     // console.log('')
-    console.log(`--------------pc: ${pc}   skip: ${skip}   size: ${size}`)
-    console.log(`ring: ${rangePrinter(ring)}`)
+    // console.log('')
+    // console.log(`--------------pc: ${pc}   skip: ${skip}   size: ${size}`)
+    // console.log(`ring: ${rangePrinter(ring)}`)
 
     let rotRing = ring.concat(ring).slice(pc, pc + ring.size);
 
@@ -84,19 +84,64 @@ const solver = (list, _ring) => {
     pc = (pc + size + skip) % ring.size;
     skip = (skip + 1) % ring.size;
 
-    console.log('ring', rangePrinter(ring))
-    console.log(`--------------`)
+    // console.log('ring', rangePrinter(ring))
+    // console.log(`--------------`)
   })
 
-  console.log('=====> ring', rangePrinter(ring))
-  console.log(ring.get(0) * ring.get(1))
+  // Part 1:
+  // console.log('=====> ring', rangePrinter(ring))
+  // console.log(ring.get(0) * ring.get(1))
+
+  return {ring, pc, skip}
 
 }
+
+const solver2 = (input) => {
+  let list = input.split('').map(c => c.charCodeAt(0)).concat([17, 31, 73, 47, 23])
+  // console.log(list)
+
+  let ring = _.range(0, 256)
+  let pc = 0, skip = 0;
+
+  for (let c = 0; c < 64; c++) {
+    ({ring, pc, skip} = solver(list, ring, pc, skip))
+    // console.log(c, pc, skip)
+  }
+
+  // console.log(ring, pc, skip)
+
+  let denseHash = ''
+  _.range(0, 16).map(hashPart => {
+    let xor = xorCompress(ring.slice(hashPart*16, hashPart*16 + 16))
+    // console.log('xor', xor, xor.toString(16))
+    let hexString = xor.toString(16)
+    denseHash += (hexString.length == 1) ? '0' + hexString : hexString;
+  })
+
+  console.log(`denseHash: ${denseHash} from "${input}"`)
+}
+
+let xorCompress = (list16 => {
+  return list16.reduce((acc, v) => {
+    return acc ^ v
+  },0)
+})
 
 
 let testInput = [3, 4, 1, 5]
 
-solver(parts(lines(input)[0]), _.range(0, 256))
+// solver(parts(lines(input)[0]), _.range(0, 256))
+
+// solver2(lines(input)[0], _.range(0, 256))
+// solver2('1,2,3', _.range(0, 5))
+// solver2(lines(input)[0])
+
+solver2('')
+solver2('AoC 2017')
+solver2('1,2,3')
+solver2('1,2,4')
+solver2('192,69,168,160,78,1,166,28,0,83,198,2,254,255,41,12')
+
 // solver([192,69], _.range(0, 256))
 // solver(testInput, _.range(0, 5))
 // console.log('---------------------------------------------------------------------- solver2')
@@ -107,3 +152,7 @@ solver(parts(lines(input)[0]), _.range(0, 256))
 // > 18786 (101*186)
 // != 27060
 // 48705 --> original solver ... 191*255
+
+// Part2 attempts:
+// 1c46642b6f2bc21db2a2149daeeae5d // damn you zero padding!
+// 1c46642b6f2bc21db2a2149d0aeeae5d -> correct
