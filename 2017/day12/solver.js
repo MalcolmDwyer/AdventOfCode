@@ -11,35 +11,46 @@ const lines = input => input
 //-----------------------------------------------------------
 
 const solver = (input) => {
-  // console.log(input.length)
+  let allSets = Immutable.List();
 
-  let zeroSet = new Set()
   let prevSetSize = -1;
+  let prevAllSets = -1;
   let iter = 0;
 
-  while (zeroSet.size !== prevSetSize) {
-    prevSetSize = zeroSet.size
-    input.forEach((pipe, ix) => {
-      let parts = /^([0-9-]*) <-> ([0-9, ]*)*$/.exec(pipe)
-      let base = parseInt(parts[1])
-      let ends = parts[2].split(',').map(s => parseInt(s))
+  let nodesList = input.map(pipe => {
+    let parts = /^([0-9-]*) <-> ([0-9, ]*)*$/.exec(pipe)
+    let base = parseInt(parts[1])
+    let ends = parts[2].split(',').map(s => parseInt(s))
 
-      let nodes = [base, ...ends];
-      // console.log('nodes', nodes)
-      if (!ix) {
-        nodes.forEach(n => zeroSet.add(n))
+    let nodes = [base, ...ends];
+    return nodes
+  })
+
+  while (!allSets.equals(prevAllSets) || !iter) {
+    prevAllSets = allSets
+
+    nodesList.forEach((nodes, ix) => {
+      let pix = allSets.findIndex(set => nodes.some(n => set.has(n)))
+
+      if (pix < 0) {
+        allSets = allSets.push(Immutable.Set(nodes))
       }
       else {
-        nodes.map(n => {
-          if (zeroSet.has(n)) {
-            nodes.forEach(n => zeroSet.add(n))
-          }
-        })
+        let allLinkedNodesSet =
+          allSets
+            .filter(set => nodes.some(n => set.has(n)))
+            .reduce((all, set) => all.union(set), Immutable.Set())
+            .union(nodes)
+
+        allSets = allSets
+          .filter(set => !set.some(n => allLinkedNodesSet.has(n)))
+          .push(allLinkedNodesSet)
       }
     })
+    iter++
   }
 
-  // console.log(zeroSet)
-  console.log(zeroSet.size)
+  console.log('zeroSet size:', allSets.find(set => set.has(0)).size)
+  console.log('allSets:', allSets.size)
 }
 solver(lines(input))
