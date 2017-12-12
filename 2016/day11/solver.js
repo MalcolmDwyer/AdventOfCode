@@ -28,8 +28,8 @@ let realGoal2 = Immutable.fromJS(
 
 
 // let [labels, input, goal] = [testLabels, testInput, testGoal];
-// let [labels, input, goal] = [realLabels, realInput, realGoal];
-let [labels, input, goal] = [realLabels2, realInput2, realGoal2];
+let [labels, input, goal] = [realLabels, realInput, realGoal];
+// let [labels, input, goal] = [realLabels2, realInput2, realGoal2];
 
 let nodePrinter = (node, ix) => {
 
@@ -53,11 +53,16 @@ let itemFloor = node => {
 
 let itemIndexesOnFloor = (node, floor) => {
   let indexes = [];
-  node.slice(1).forEach((thing, index) => {
-    if (thing === floor) {
-      indexes.push(index + 1);
+  // node.slice(1).forEach((thing, index) => {
+  //   if (thing === floor) {
+  //     indexes.push(index + 1);
+  //   }
+  // })
+  for (var i=1; i < node.size; i++) {
+    if (node.get(i) === floor) {
+      indexes.push(i);
     }
-  })
+  }
   return indexes;
 }
 
