@@ -13,8 +13,6 @@ const lines = input => input
 const solver = (input) => {
   let allSets = Immutable.List();
 
-  let prevAllSets = -1;
-
   let nodesList = input.map(pipe => {
     let parts = /^([0-9-]*) <-> ([0-9, ]*)*$/.exec(pipe)
     let base = parseInt(parts[1])
