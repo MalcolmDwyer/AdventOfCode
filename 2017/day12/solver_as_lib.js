@@ -45,9 +45,9 @@ const solver = (input) => {
   })
 
   // console.log('Zero Group size:', allSets.find(set => set.has(0)).size)
-  console.log('# of Groups:', allSets.size)
+  // console.log('# of Groups:', allSets.size)
 
-  console.log(allSets.toJS())
+  // console.log(allSets.toJS())
 
   return allSets
 }

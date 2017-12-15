@@ -54,7 +54,7 @@ const printGrid = grid => {
       // console.log('b4', s.join(''))
     }
     rows.push(s.join(''))
-    console.log(s.join(''))
+    // console.log(s.join(''))
 
     // find subregions:
     let neighbors = [];
@@ -85,7 +85,7 @@ const printGrid = grid => {
   // console.log(regions.toJS())
   console.log('regionCount', regions.size)
   let joinedRegions = countGroups(regions)
-  console.log('joinedRegions', joinedRegions)
+  // console.log('joinedRegions', joinedRegions)
   // Part 2 answer:
   console.log('joinedRegions', joinedRegions.size)
   // console.log(randomEmoji.random({count:5}).map(e => e.character))
