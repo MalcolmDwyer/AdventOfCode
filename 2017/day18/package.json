@@ -4,8 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "show-b": "babel --plugins transform-async-generator-functions solver2.js",
-    "start": "babel-node --plugins transform-async-generator-functions solver2.js"
+    "start": "babel-node solver2.js"
   },
   "devDependencies": {
     "babel-plugin-transform-async-generator-functions": "^6.24.1"
