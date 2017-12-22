@@ -70,13 +70,10 @@ const parseRules = (lines) => {
 
   lines.forEach(line => {
     let rule = parseRule(line)
-    // console.log('---------rule', rule)
     if (line.length == 20) {
-      // rules[2].push(rule)
-      // rules[2].push(...rot2(rule))
+      // Done above manually
     }
     else {
-      // rules[3].push(rule)
       rules[3].push([flipRot3(rule[0]), rule[1], line])
     }
   })
@@ -96,23 +93,11 @@ const parsePartial = (string) =>
       , 0
     )
 
-// const initialPattern =
-// const initialPatternValue = parseRule('.#./..#/### => ..../..../..../....')[0]
-
-
 const solver = (input) => {
   let rules = parseRules(input)
-  // console.log(rules[2])
-  // console.log(rules[3])
-  // console.log(rules[3][3])
-
   let pattern = `.#./..#/###`
-  // let patternValue = parsePartial(pattern)
-
   let patternSize = 3;
   let iterations = 18;
-
-  // console.log('solver', pattern)
 
   for (let i = 0; i < iterations; i++) {
     // console.log('')
@@ -123,16 +108,12 @@ const solver = (input) => {
     // pattern.split('/').forEach(s => console.log(s))
 
     let tiles = tileSplit(pattern, patternSize)
-    // console.log('tiles', tiles)
 
     let tileSolutions = tiles.map(t =>
       tileSolver(t, patternSize, rules)
     )
-    // console.log('tileSolutions', tileSolutions.length, tileSolutions)
 
-    // patternSize++
     patternSize = Math.sqrt(tileSolutions.join('').replace(/\//g, '').length)
-    // console.log('new patternSize:', patternSize)
     pattern =
       tileJoin(
         tileSolutions,
@@ -149,23 +130,17 @@ const solver = (input) => {
 }
 
 const tileSplit = (pattern, patternSize) => {
-  // console.log('tileSplit', patternSize, pattern)
   let rows = pattern.split('/');
   let cells = rows.map(r => r.split(''))
-  // console.log(cells)
   let tiles = []
   let tileSize = (patternSize%2) ? 3 : 2
   let tileSide = Math.floor(rows.length / tileSize)
-  // console.log(`tileSize: ${tileSize}  tileSide: ${tileSide}`)
 
   for (let t = 0; t < tileSide * tileSide; t++) {
-    // console.log('----------------t', t)
     let r = Math.floor(t / tileSide) * tileSize
     let c = (t % tileSide) * tileSize
-    // console.log(r, c)
     tiles[t] = cells.slice(r, r + tileSize).map(r => r.slice(c, c + tileSize).join('')).join('/')
   }
-  // console.log('tileSplit', tiles)
   return tiles
 }
 
@@ -176,31 +151,24 @@ const tileJoin = (tiles, patternSize) => {
   for (let x = 0; x < patternSize; x++) {
     cells[x] = Array(patternSize).fill(' ')
   }
-  // console.log(cells)
 
   let tileSize = patternSize = Math.sqrt(tiles[0].replace(/\//g, '').length)
   let tileSide = Math.sqrt(tiles.length)
 
   for (let t = 0; t < tiles.length; t++) {
-    // console.log('----------------t', t)
     let r = Math.floor(t / tileSide) * tileSize
     let c = (t % tileSide) * tileSize
 
     let ch = tiles[t].split('/').map(s => s.split(''))
-    // console.log('r', r, 'c', c, 't', t, 'tiles', tiles[t], 'ch', ch)
     for (let x = 0; x < tileSize; x++) {
-      // console.log('    x', x)
       cells[r + x].splice(c, tileSize, ...ch[x])
-      // console.log('cells', cells)
     }
   }
-  // console.log('tileJoin < ', cells)
   return cells.map(r => r.join('')).join('/')
 }
 
 const tileSolver = (pattern, patternSize, rules) => {
 
-  // console.log('--------tileSolver', pattern)
   let ruleSet = (patternSize % 2) ? 3 : 2
 
   let patternValues
@@ -210,42 +178,15 @@ const tileSolver = (pattern, patternSize, rules) => {
   else {
     patternValues = rules[2].find(([_in]) => _in.includes(parsePartial(pattern)))[0]
   }
-  // console.log('patternValues', patternValues)
 
   let newRule = rules[ruleSet].find(([_in]) =>
     _in.some(i => patternValues.includes(i))
   )
 
-
   if (!newRule) {
     console.error('no match found')
   }
-  // console.log(newRule)
   return newRule && newRule[2].split(' => ')[1]
 }
-
-
-
-
-// console.log(tileSplit('abcdef/ghijkl/mnopqr/stuvwx/yz0123/456789', 6))
-// console.log(tileSplit(
-//   'abcdef---/ghijkl.../mnopqr___/stuvwx===/yz0123+++/456789)))/........./........./........./',
-// 9))
-//
-// console.log(tileJoin(tileSplit('abc/def/ghi', 3)))
-
-// console.log(tileJoin(tileSplit('abcdef/ghijkl/mnopqr/stuvwx/yz0123/456789', 6), 6))
-
-// console.log(tileSplit('#..#/...#/##../####', 4))
-// console.log(tileJoin(tileSplit('#..#/...#/##../####', 4), 4))
-
-// let ts = tileSplit('#..#/...#/##../####', 4)
-// console.log('ts', ts)
-// let tj = tileJoin(ts, 4)
-// console.log('tj', tj)
-// let tj = tileJoin(['#..#/...#/##../####'], 4)
-// console.log('tj', tj)
-//
-// console.log('--------------------------------------------------------')
 
 solver(lines(input))
