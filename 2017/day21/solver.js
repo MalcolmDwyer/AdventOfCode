@@ -26,17 +26,30 @@ const rot3 = r => {
   // console.log((r & 0x100) >> 2)
 
   return 0 +
-    ((r & 0x1) << 2) +
-    ((r & 0x2) << 4) +
-    ((r & 0x4) << 6) +
+    ((r & 0x1) ? 0x4 : 0) +
+    ((r & 0x2) ? 0x20 : 0) +
+    ((r & 0x4) ? 0x100 : 0) +
 
-    ((r & 0x8) >> 2) +
-    ((r & 0x10)) +
-    ((r & 0x20) << 2) +
+    ((r & 0x8)  ? 0x2 : 0) +
+    ((r & 0x10) ? 0x10 : 0) +
+    ((r & 0x20) ? 0x80 : 0) +
 
-    ((r & 0x40) >> 6) +
-    ((r & 0x80) >> 4) +
-    ((r & 0x100) >> 2)
+    ((r & 0x40) ? 0x1 : 0) +
+    ((r & 0x80) ? 0x8 : 0) +
+    ((r & 0x100) ? 0x40 : 0)
+
+  // return 0 +
+  //   ((r & 0x1) << 2) +
+  //   ((r & 0x2) << 4) +
+  //   ((r & 0x4) << 6) +
+  //
+  //   ((r & 0x8) >> 2) +
+  //   ((r & 0x10)) +
+  //   ((r & 0x20) << 2) +
+  //
+  //   ((r & 0x40) >> 6) +
+  //   ((r & 0x80) >> 4) +
+  //   ((r & 0x100) >> 2)
 }
 const flip3 = r => {
 
@@ -53,17 +66,30 @@ const flip3 = r => {
   // console.log((r & 0x100 >> 2))
 
   return 0 +
-    ((r & 0x1) << 2) +
-    ((r & 0x2)) +
-    ((r & 0x4) >> 2) +
+    ((r & 0x1) ? 0x4 : 0) +
+    ((r & 0x2) ? 0x2 : 0) +
+    ((r & 0x4) ? 0x1 : 0) +
 
-    ((r & 0x8) << 2) +
-    ((r & 0x10)) +
-    ((r & 0x20) >> 2) +
+    ((r & 0x8)  ? 0x20 : 0) +
+    ((r & 0x10) ? 0x10 : 0) +
+    ((r & 0x20) ? 0x8 : 0) +
 
-    ((r & 0x40) << 2) +
-    ((r & 0x80)) +
-    ((r & 0x100) >> 2)
+    ((r & 0x40)  ? 0x100 : 0) +
+    ((r & 0x80)  ? 0x80 : 0) +
+    ((r & 0x100) ? 0x40 : 0)
+
+  // return 0 +
+  //   ((r & 0x1) << 2) +
+  //   ((r & 0x2)) +
+  //   ((r & 0x4) >> 2) +
+  //
+  //   ((r & 0x8) << 2) +
+  //   ((r & 0x10)) +
+  //   ((r & 0x20) >> 2) +
+  //
+  //   ((r & 0x40) << 2) +
+  //   ((r & 0x80)) +
+  //   ((r & 0x100) >> 2)
 }
 
 const flipRot3 = r => {
@@ -112,27 +138,17 @@ const parseRules = (lines) => {
 }
 
 const parseRule = (line) => {
-  // ##/## => .../#.#/...
-  // .../.../... => .#../#.#./..##/.###
-
-  // 8+4+2+1 (15) => 0+0+0+32+0+8+0+0+0 (40)
-  // 0+0+0... => 0+16384 +
-
-  let [_in, _out] = line
-    .split(' => ')
-
-  // console.log(`${_in}      =>       ${_out}`)
-
-  let inVal = _in.replace('/', '').split('')
-    .reduce((acc, ch, ix) => (acc + (ch == '#' ? (0x1<<ix) : 0)), 0)
-  let outVal = _out.replace('/', '').split('')
-    .reduce((acc, ch, ix) => (acc + (ch == '#' ? (0x1<<ix) : 0)), 0)
-
-
-
-  // console.log(`${inVal} => ${outVal}`)
-  return [inVal, outVal]
+  return line.split(' => ').map(str => parsePartial(str))
 }
+
+const parsePartial = (string) =>
+  string
+    .replace(/\//g, '')
+    .split('')
+    .reduce(
+      (acc, ch, ix) => (acc + (ch == '#' ? (0x1<<ix) : 0))
+      , 0
+    )
 
 const initialPattern = `.#./..#/###`
 const initialPatternValue = parseRule('.#./..#/### => ..../..../..../....')[0]
@@ -141,52 +157,71 @@ const initialPatternValue = parseRule('.#./..#/### => ..../..../..../....')[0]
 const solver = (input) => {
   let rules = parseRules(input)
   // console.log(rules[2])
-  console.log(rules[3][3])
+  // console.log(rules[3][3])
 
   let pattern = initialPattern;
+  let patternValue = initialPatternValue;
+
   let patternSize = 3;
-  let iterations = 1;
+  let iterations = 5;
 
-  for (let i = 0; i < iterations; i++) {
-
+  for (let i = 0; i < iterations && pattern; i++) {
     console.log('----------------------');
     pattern.split('/').forEach(s => console.log(s))
 
-    let patternValue = initialPatternValue;
-    let patternValues = flipRot3(patternValue)
-    let x;
-
-    if (!(patternSize%2)) {
-      rules[2].find(([_in, _out], ruleIx) => {
-        // console.log(`checking ${pattern} against ${_in}`)
-        // if (_in.includes(pattern)) {
-        if (x = _in.some(i => patternValues.includes(i))) {
-          console.log('[2] found match', ruleIx, patternValue, x)
-        }
-        else {
-          // console.log('no match', pattern)
-        }
-      })
-    }
-    else {
-
-      rules[3].find(([_in, _out, line], ruleIx) => {
-        // console.log(`checking ${pattern} against ${_in}`)
-        // if (_in.includes(pattern)) {
-        if (x = _in.find(i => patternValues.includes(i))) {
-          console.log('[3] found match', ruleIx, patternValue, x)
-          console.log(_in, line)
-        }
-        else {
-          // console.log('no match', pattern)
-        }
-      })
-    }
+    let tiles = tileSplit(pattern, patternSize)
+    console.log('tiles', tiles)
+    pattern = tileSolver(pattern, patternSize, rules)
 
     patternSize++
   }
+}
 
+const tileSplit = (pattern, patternSize) => {
+  let rows = pattern.split('/');
+  let cells = rows.map(r => r.split(''))
+  // console.log(cells)
+  let tiles = []
+  let tileSize = (patternSize%2) ? 3 : 2
+  let tileSide = Math.floor(rows.length / tileSize)
+  // console.log(`tileSize: ${tileSize}  tileSide: ${tileSide}`)
+
+  for (let t = 0; t < tileSide * tileSide; t++) {
+    // console.log('----------------t', t)
+    let r = Math.floor(t / tileSide) * tileSize
+    let c = (t % tileSide) * tileSize
+    // console.log(r, c)
+    tiles[t] = cells.slice(r, r + tileSize).map(r => r.slice(c, c + tileSize).join('')).join('/')
+  }
+  return tiles
+}
+
+const tileJoin = (tiles, patternSize) => {
+  console.log('tileJoin', tiles, patternSize)
+  return;
+}
+
+const tileSolver = (pattern, patternSize, rules) => {
+
+  let patternValues = flipRot3(parsePartial(pattern))
+
+  let ruleSet = (patternSize % 2) ? 3 : 2
+  let newRule = rules[ruleSet].find(([_in]) =>
+    _in.some(i => patternValues.includes(i))
+  )
+
+  if (!newRule) {
+    console.error('no match found')
+  }
+  return newRule && newRule[2].split(' => ')[1]
 }
 
 
-solver(lines(input))
+// solver(lines(input))
+
+// console.log(tileSplit('abcdef/ghijkl/mnopqr/stuvwx/yz0123/456789', 6))
+// console.log(tileSplit(
+//   'abcdef---/ghijkl.../mnopqr___/stuvwx===/yz0123+++/456789)))/........./........./........./',
+// 9))
+//
+console.log(tileJoin(tileSplit('abc/def/ghi', 3)))
