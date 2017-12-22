@@ -11,21 +11,7 @@ const lines = input => input
 //-----------------------------------------------------------
 
 
-const rot3 = r => {
-
-  // console.log((r & 0x1) << 2)
-  // console.log((r & 0x2) << 4)
-  // console.log((r & 0x4) << 6)
-  //
-  // console.log((r & 0x8) >> 2)
-  // console.log((r & 0x10))
-  // console.log((r & 0x20) << 2)
-  //
-  // console.log((r & 0x40) >> 6)
-  // console.log((r & 0x80) >> 4)
-  // console.log((r & 0x100) >> 2)
-
-  return 0 +
+const rot3 = r => 0 +
     ((r & 0x1) ? 0x4 : 0) +
     ((r & 0x2) ? 0x20 : 0) +
     ((r & 0x4) ? 0x100 : 0) +
@@ -38,34 +24,7 @@ const rot3 = r => {
     ((r & 0x80) ? 0x8 : 0) +
     ((r & 0x100) ? 0x40 : 0)
 
-  // return 0 +
-  //   ((r & 0x1) << 2) +
-  //   ((r & 0x2) << 4) +
-  //   ((r & 0x4) << 6) +
-  //
-  //   ((r & 0x8) >> 2) +
-  //   ((r & 0x10)) +
-  //   ((r & 0x20) << 2) +
-  //
-  //   ((r & 0x40) >> 6) +
-  //   ((r & 0x80) >> 4) +
-  //   ((r & 0x100) >> 2)
-}
-const flip3 = r => {
-
-  // console.log((r & 0x1 << 2))
-  // console.log((r & 0x2))
-  // console.log((r & 0x4 >> 2))
-  //
-  // console.log((r & 0x8 << 2))
-  // console.log((r & 0x10))
-  // console.log((r & 0x20 >> 2))
-  //
-  // console.log((r & 0x40 << 2))
-  // console.log((r & 0x80))
-  // console.log((r & 0x100 >> 2))
-
-  return 0 +
+const flip3 = r => 0 +
     ((r & 0x1) ? 0x4 : 0) +
     ((r & 0x2) ? 0x2 : 0) +
     ((r & 0x4) ? 0x1 : 0) +
@@ -78,19 +37,6 @@ const flip3 = r => {
     ((r & 0x80)  ? 0x80 : 0) +
     ((r & 0x100) ? 0x40 : 0)
 
-  // return 0 +
-  //   ((r & 0x1) << 2) +
-  //   ((r & 0x2)) +
-  //   ((r & 0x4) >> 2) +
-  //
-  //   ((r & 0x8) << 2) +
-  //   ((r & 0x10)) +
-  //   ((r & 0x20) >> 2) +
-  //
-  //   ((r & 0x40) << 2) +
-  //   ((r & 0x80)) +
-  //   ((r & 0x100) >> 2)
-}
 
 const flipRot3 = r => {
   let r1 = rot3(r)
@@ -112,12 +58,12 @@ const flipRot3 = r => {
 const parseRules = (lines) => {
   let rules = {
     2: [
-      [ [ 0 ], 415 ],
-      [ [ 1, 2, 4, 8 ], 62 ],
-      [ [3, 5, 10, 12], 187 ],
-      [ [ 6, 9 ], 942 ],
-      [ [ 7, 11, 13, 14 ], 186 ],
-      [ [ 15 ], 40 ]
+      [ [ 0 ], 415,             '../.. => ###/##./##.' ],
+      [ [ 1, 2, 4, 8 ], 62,     '#./.. => .##/###/...' ],
+      [ [3, 5, 10, 12], 187,    '##/.. => ##./###/#..' ],
+      [ [ 6, 9 ], 942,          '.#/#. => .##/#.#/###' ],
+      [ [ 7, 11, 13, 14 ], 186, '##/#. => .#./###/#..' ],
+      [ [ 15 ], 40,             '##/## => .../#.#/...' ]
     ],
     3: []
   }
@@ -150,34 +96,60 @@ const parsePartial = (string) =>
       , 0
     )
 
-const initialPattern = `.#./..#/###`
-const initialPatternValue = parseRule('.#./..#/### => ..../..../..../....')[0]
+// const initialPattern =
+// const initialPatternValue = parseRule('.#./..#/### => ..../..../..../....')[0]
 
 
 const solver = (input) => {
   let rules = parseRules(input)
   // console.log(rules[2])
+  // console.log(rules[3])
   // console.log(rules[3][3])
 
-  let pattern = initialPattern;
-  let patternValue = initialPatternValue;
+  let pattern = `.#./..#/###`
+  // let patternValue = parsePartial(pattern)
 
   let patternSize = 3;
-  let iterations = 5;
+  let iterations = 18;
 
-  for (let i = 0; i < iterations && pattern; i++) {
-    console.log('----------------------');
-    pattern.split('/').forEach(s => console.log(s))
+  // console.log('solver', pattern)
+
+  for (let i = 0; i < iterations; i++) {
+    // console.log('')
+    // console.log('')
+    // console.log('')
+    // console.log(i)
+    console.log('================================================', patternSize);
+    // pattern.split('/').forEach(s => console.log(s))
 
     let tiles = tileSplit(pattern, patternSize)
-    console.log('tiles', tiles)
-    pattern = tileSolver(pattern, patternSize, rules)
+    // console.log('tiles', tiles)
 
-    patternSize++
+    let tileSolutions = tiles.map(t =>
+      tileSolver(t, patternSize, rules)
+    )
+    // console.log('tileSolutions', tileSolutions.length, tileSolutions)
+
+    // patternSize++
+    patternSize = Math.sqrt(tileSolutions.join('').replace(/\//g, '').length)
+    // console.log('new patternSize:', patternSize)
+    pattern =
+      tileJoin(
+        tileSolutions,
+        patternSize
+      )
   }
+
+  // console.log('===============================')
+  // console.log(pattern)
+  // pattern.split('/').forEach(s => console.log(s))
+
+  console.log(pattern.replace(/[\/\.]/g, '').length)
+
 }
 
 const tileSplit = (pattern, patternSize) => {
+  // console.log('tileSplit', patternSize, pattern)
   let rows = pattern.split('/');
   let cells = rows.map(r => r.split(''))
   // console.log(cells)
@@ -193,35 +165,87 @@ const tileSplit = (pattern, patternSize) => {
     // console.log(r, c)
     tiles[t] = cells.slice(r, r + tileSize).map(r => r.slice(c, c + tileSize).join('')).join('/')
   }
+  // console.log('tileSplit', tiles)
   return tiles
 }
 
 const tileJoin = (tiles, patternSize) => {
-  console.log('tileJoin', tiles, patternSize)
-  return;
+  // console.log('tileJoin > ', patternSize, tiles)
+  // if (tiles.length == 1) { return tiles }
+  let cells = Array(patternSize)
+  for (let x = 0; x < patternSize; x++) {
+    cells[x] = Array(patternSize).fill(' ')
+  }
+  // console.log(cells)
+
+  let tileSize = patternSize = Math.sqrt(tiles[0].replace(/\//g, '').length)
+  let tileSide = Math.sqrt(tiles.length)
+
+  for (let t = 0; t < tiles.length; t++) {
+    // console.log('----------------t', t)
+    let r = Math.floor(t / tileSide) * tileSize
+    let c = (t % tileSide) * tileSize
+
+    let ch = tiles[t].split('/').map(s => s.split(''))
+    // console.log('r', r, 'c', c, 't', t, 'tiles', tiles[t], 'ch', ch)
+    for (let x = 0; x < tileSize; x++) {
+      // console.log('    x', x)
+      cells[r + x].splice(c, tileSize, ...ch[x])
+      // console.log('cells', cells)
+    }
+  }
+  // console.log('tileJoin < ', cells)
+  return cells.map(r => r.join('')).join('/')
 }
 
 const tileSolver = (pattern, patternSize, rules) => {
 
-  let patternValues = flipRot3(parsePartial(pattern))
-
+  // console.log('--------tileSolver', pattern)
   let ruleSet = (patternSize % 2) ? 3 : 2
+
+  let patternValues
+  if (ruleSet == 3) {
+    patternValues = flipRot3(parsePartial(pattern))
+  }
+  else {
+    patternValues = rules[2].find(([_in]) => _in.includes(parsePartial(pattern)))[0]
+  }
+  // console.log('patternValues', patternValues)
+
   let newRule = rules[ruleSet].find(([_in]) =>
     _in.some(i => patternValues.includes(i))
   )
 
+
   if (!newRule) {
     console.error('no match found')
   }
+  // console.log(newRule)
   return newRule && newRule[2].split(' => ')[1]
 }
 
 
-// solver(lines(input))
+
 
 // console.log(tileSplit('abcdef/ghijkl/mnopqr/stuvwx/yz0123/456789', 6))
 // console.log(tileSplit(
 //   'abcdef---/ghijkl.../mnopqr___/stuvwx===/yz0123+++/456789)))/........./........./........./',
 // 9))
 //
-console.log(tileJoin(tileSplit('abc/def/ghi', 3)))
+// console.log(tileJoin(tileSplit('abc/def/ghi', 3)))
+
+// console.log(tileJoin(tileSplit('abcdef/ghijkl/mnopqr/stuvwx/yz0123/456789', 6), 6))
+
+// console.log(tileSplit('#..#/...#/##../####', 4))
+// console.log(tileJoin(tileSplit('#..#/...#/##../####', 4), 4))
+
+// let ts = tileSplit('#..#/...#/##../####', 4)
+// console.log('ts', ts)
+// let tj = tileJoin(ts, 4)
+// console.log('tj', tj)
+// let tj = tileJoin(['#..#/...#/##../####'], 4)
+// console.log('tj', tj)
+//
+// console.log('--------------------------------------------------------')
+
+solver(lines(input))
