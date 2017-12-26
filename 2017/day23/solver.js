@@ -86,8 +86,32 @@ const solver = (input) => {
 
 }
 
-solver(lines(input))
+// solver(lines(input))
 
+
+const solver2 = () => {
+  let count = 0;
+  let a = 108400;
+  let b = 108400 + (17 * 1001)
+  Immutable.Range(a, b, 17).forEach(n => {
+    let p = 2
+    let comp = false;
+    do {
+      if (!(n%p)) {
+        comp = true;
+      }
+      p++
+    } while ((p < n/2) && !comp)
+
+    if (comp) {
+      count++
+    }
+  })
+  console.log('count', count)
+}
+
+solver2()
+// !15542
 
 // ! 1
 // ! 4
