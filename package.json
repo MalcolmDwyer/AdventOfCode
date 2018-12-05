@@ -9,5 +9,9 @@
     "babel-cli": "^6.26.0",
     "babel-plugin-transform-async-generator-functions": "^6.24.1",
     "immutable": "^3.8.2"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.1.5",
+    "@babel/core": "^7.1.6"
   }
 }
