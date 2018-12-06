@@ -1,13 +1,20 @@
-var fs = require('fs');
+import fs from 'fs'
 
-require.extensions['.txt'] = function (module, filename) {
-    module.exports = fs.readFileSync(filename, 'utf8');
-};
+export const readFile = path => {
+  return new Promise((resolve, reject) => {
+    fs.readFile(path, 'utf8', (err, data) => {
+      if (err) {
+        reject(err)
+      }
+      else {
+        resolve(data)
+      }
+    })
+  })
+}
 
-
-module.exports = {
-  getInputFile: n => {
-    return require(n);
-  },
-  lines: input => input.split('\n').filter(a => a.length)
+export const getLines = input => {
+  return input
+    .split('\n')
+    .filter(line => line)
 }
