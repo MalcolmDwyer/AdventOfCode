@@ -121,5 +121,5 @@ const solver2 = lines => {
 // < 865
 
 
-  console.log('2 ***: ', time)
+  console.log('2 ***: ', time - 1)
 }
