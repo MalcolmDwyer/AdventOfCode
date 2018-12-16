@@ -99,10 +99,8 @@ const getSamples = (lines) => {
         op,
         after: a
       }
-      // console.log(data[i])
     }
     else {
-      // console.log('XXX ', lines[i*3])
       done = true
     }
     i++
