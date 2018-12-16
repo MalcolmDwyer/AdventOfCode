@@ -14,15 +14,30 @@ readFile(path.resolve(process.argv[2] || 'input.txt'))
   })
 
 const solver = (lines) => {
-  solver1(lines)
-  // solver1(lines, true) // part2
+  // solver1(lines)
+  solver2(lines) // part2
 }
+
+const solver2 = (lines) => {
+  let elfAttack = 3
+  let result = true
+
+  while (result && (elfAttack < 60)) {
+    elfAttack++
+    console.log('#################################################### ELF ATTACK:', elfAttack)
+    const linesOrig = [...lines.map(line => [...line])]
+    result = solver1(linesOrig, elfAttack, true)
+  }
+  console.log('elfAttack', elfAttack)
+}
+
+// 37272
 
 const unitTypes = ['E', 'G']
 // const adjacentCells = [[-1, 0], [0, -1], [0, 1], [1, 0]]
 const adjacentCells = [{y: -1, x: 0}, {y: 0, x: -1}, {y: 0, x: 1}, {y: 1, x: 0}]
 
-const solver1 = lines => {
+const solver1 = (lines, elfAttack = 3, breakOnElfDeath = false) => {
   let units = []
   let unitIndex = 0
   for (let y = 0; y < lines.length; y++) {
@@ -35,14 +50,15 @@ const solver1 = lines => {
           id: unitIndex,
           type: c,
           hp: 200,
-          attack: 3
+          attack: (c == 'G') ? 3 : elfAttack
         })
         unitIndex++
-        // Fill in the track underneath the cart:
+        // Fill in the map underneath the unit:
         lines[y][x] = '.'
       }
     }
   }
+  console.log(units)
 
   // > 177510
   // > 185409
@@ -66,10 +82,16 @@ const solver1 = lines => {
     // })
     done = runTurn(lines, units, t)
 
-
-    printMap(lines, units)
+    if (breakOnElfDeath && units.filter(unit => unit.type == 'E' && !unit.hp).length) {
+      done = true
+      console.log('Elf has died')
+      return true
+    }
+    else {
+      printMap(lines, units)
+    }
   }
-
+  return false
   // units.forEach(unit => {
   //   console.log(unit)
   // })
@@ -295,7 +317,7 @@ const runMove2 = (lines, units, unit, targetAdjacentCells, t) => {
   let bestTarget = null
 
   for (let target of targetAdjacentCells) {
-    ;(t > 170) && console.log('targetAdjacentCell:', target.y, target.x)
+    //DETAIL_COMMENT console.log('targetAdjacentCell:', target.y, target.x)
     let graph = map.map((line, y) => line.map((cell, x) => ({
       weight: cell,
       visited: 0,
@@ -309,12 +331,12 @@ const runMove2 = (lines, units, unit, targetAdjacentCells, t) => {
     graph[unit.y][unit.x].visited = 1
 
     // console.log(graph)
-    ;(t > 170) && console.log('visited:')
-    ;(t > 170) && printGraph(graph, units, 'visited')
-    ;(t > 170) && console.log('distance')
-    ;(t > 170) && printGraph(graph, units, 'distance')
-    ;(t > 170) && console.log('weight')
-    ;(t > 170) && printGraph(graph, units, 'weight')
+    //DETAIL_COMMENT console.log('visited:')
+    //DETAIL_COMMENT printGraph(graph, units, 'visited')
+    //DETAIL_COMMENT console.log('distance')
+    //DETAIL_COMMENT printGraph(graph, units, 'distance')
+    //DETAIL_COMMENT console.log('weight')
+    //DETAIL_COMMENT printGraph(graph, units, 'weight')
     // return
 
     let distance = 0
@@ -337,28 +359,28 @@ const runMove2 = (lines, units, unit, targetAdjacentCells, t) => {
       // if (distance > bestDistance) {
       //   break
       // }
-      ;(t > 170) && console.log('=== finding distance', distance, '(best)', bestDistance)
+      //DETAIL_COMMENT console.log('=== finding distance', distance, '(best)', bestDistance)
       visitedAnything = false
       visited.forEach(cell => {
-        ;(t > 170) && console.log(`visited cell ${cell.y},${cell.x} ==>`)
+        //DETAIL_COMMENT console.log(`visited cell ${cell.y},${cell.x} ==>`)
         for (let a of adjacentCells) {
           let y = cell.y + a.y
           let x = cell.x + a.x
 
-          ;(t > 170) && console.log(`  adj cell ${y},${x} w${graph[y][x].weight} v${graph[y][x].visited}`)
+          //DETAIL_COMMENT console.log(`  adj cell ${y},${x} w${graph[y][x].weight} v${graph[y][x].visited}`)
 
           if (graph[y][x].weight && !graph[y][x].visited) {
             graph[y][x].distance = distance
             graph[y][x].visited = 1
             graph[y][x].parent = cell
             visitedAnything = true
-            ;(t > 170) && console.log('      --> visited')
+            //DETAIL_COMMENT console.log('      --> visited')
           }
 
           if (target.y == y && target.x == x) {
-            ;(t > 170) && console.log(`FOUND hit at ${y},${x} from ${cell.y},${cell.x}`)
+            //DETAIL_COMMENT console.log(`FOUND hit at ${y},${x} from ${cell.y},${cell.x}`)
             if (distance < bestDistance) {
-              ;(t > 170) && console.log('new best', distance)
+              //DETAIL_COMMENT console.log('new best', distance)
               bestDistance = distance
               bestTarget = target
               bestPath = [graph[y][x]]
@@ -372,28 +394,28 @@ const runMove2 = (lines, units, unit, targetAdjacentCells, t) => {
         }
       })
       if (!visitedAnything) {
-        ;(t > 170) && console.log('!!!!')
+        //DETAIL_COMMENT console.log('!!!!')
         noPath = true
         break
       }
 
       // console.log('visited:')
       // printGraph(graph, units, 'visited')
-      ;(t > 170) && console.log('distance')
-      ;(t > 170) && printGraph(graph, units, 'distance')
+      //DETAIL_COMMENT console.log('distance')
+      //DETAIL_COMMENT printGraph(graph, units, 'distance')
     }
   }
 
   if (bestPath) {
-    ;(t > 170) && console.log('bestDistance', bestDistance)
-    ;(t > 170) && console.log('bestPath')
-    ;(t > 170) && console.log(bestPath.map(p => `${p.y},${p.x}`).join(' => '))
-    ;(t > 170) && console.log('^^^^^^^^^^^^^^^^^^^^^^^^^^^^^')
+    //DETAIL_COMMENT console.log('bestDistance', bestDistance)
+    //DETAIL_COMMENT console.log('bestPath')
+    //DETAIL_COMMENT console.log(bestPath.map(p => `${p.y},${p.x}`).join(' => '))
+    //DETAIL_COMMENT console.log('^^^^^^^^^^^^^^^^^^^^^^^^^^^^^')
 
     unit.x = bestPath[0].x
     unit.y = bestPath[0].y
   }
-  else {
-    ;(t > 170) && console.log('no path')
-  }
+  //DETAIL_COMMENT else {
+    //DETAIL_COMMENT console.log('no path')
+  //DETAIL_COMMENT }
 }
