@@ -19,7 +19,8 @@ const solver = (lines) => {
 }
 
 const unitTypes = ['E', 'G']
-const adjacentCells = [[-1, 0], [0, -1], [0, 1], [1, 0]]
+// const adjacentCells = [[-1, 0], [0, -1], [0, 1], [1, 0]]
+const adjacentCells = [{y: -1, x: 0}, {y: 0, x: -1}, {y: 0, x: 1}, {y: 1, x: 0}]
 
 const solver1 = lines => {
   let units = []
@@ -43,6 +44,11 @@ const solver1 = lines => {
     }
   }
 
+  // > 177510
+  // > 185409
+  // > 188352
+  // 348744
+
   // lines.forEach(line => {
   //   console.log(line.join(''))
   // })
@@ -51,7 +57,8 @@ const solver1 = lines => {
 
   let t = 0
   let done = false
-  while (!done) {
+  // while(!done) {
+  while (!done && t < 171) {
     t++
     console.log(`************************************  ${t}`)
     // units.forEach(unit => {
@@ -73,10 +80,10 @@ const printMap = (lines, units) => {
     let str = ''
     let append = '  '
     line.forEach((cell, x) => {
-      let unit = units.find(unit => (unit.x == x) && (unit.y == y))
+      let unit = units.filter(unit => unit.hp).find(unit => (unit.x == x) && (unit.y == y))
       if (unit) {
         str += unit.type
-        append += `${unit.type}(${unit.hp}), `
+        append += `${unit.type}[${unit.id}](${unit.hp}), `
       }
       else {
         str += cell
@@ -103,20 +110,23 @@ const runTurn = (lines, units, t) => {
       continue
     }
 
-    let hasTarget = runUnit(lines, units, unit)
+    let hasTarget = runUnit(lines, units, unit, t)
     done |= !hasTarget
     if (!hasTarget) {
       console.log(`FINISHED during ${t} with ${u}`)
       let remainingHP = units.reduce((acc, unit) => acc + unit.hp, 0)
       console.log('remainingHP', remainingHP)
+
+      const s1 = (t-1)*remainingHP
+      console.log(`${t-1} * ${remainingHP} => ${s1}`)
       break
     }
   }
   return done
 }
 
-const runUnit = (lines, units, unit) => {
-  // console.log(`----------------Unit[${unit.id}] ${unit.type}:${unit.y},${unit.x}`)
+const runUnit = (lines, units, unit, t) => {
+  console.log(`----------------Unit[${unit.id}] ${unit.type}:${unit.y},${unit.x}`)
 
   const targets = units.filter(unit2 => unit2.hp && (unit2.type !== unit.type))
   if (!targets.length) {
@@ -130,7 +140,40 @@ const runUnit = (lines, units, unit) => {
     )
   )
   // console.log('AdjacentTargets (before sort/filter)', adjacentTargets)
-  const lowestHP = Math.min(...adjacentTargets.map(unit => unit.hp))
+
+
+  if (!adjacentTargets.length) {
+    const targetAdjacentCells = Array.from(targets.reduce((cells, target) => {
+      [[-1, 0], [0, -1], [0, 1], [1, 0]].forEach(adj => {
+        let siteY = target.y + adj[0]
+        let siteX = target.x + adj[1]
+        if ((lines[siteY][siteX] == '.') && !units.some(unit2 =>
+          unit2.hp && (unit2.x == siteX) && (unit2.y == siteY)
+        )) {
+          cells.add(`${siteY},${siteX}`)
+        }
+      })
+      return cells
+    }, new Set([]))).map(string => {
+      let p = string.split(',')
+      return {
+        y: parseInt(p[0]),
+        x: parseInt(p[1])
+      }
+    })
+
+    // console.log('targetAdjacentCells', targetAdjacentCells)
+    runMove2(lines, units, unit, targetAdjacentCells, t)
+  }
+
+  adjacentTargets = targets.filter(unit2 =>
+    [[-1, 0], [0, -1], [0, 1], [1, 0]].some(adj =>
+      (unit2.y == (unit.y + adj[0])) &&
+      (unit2.x == (unit.x + adj[1]))
+    )
+  )
+
+  const lowestHP = Math.min(...adjacentTargets.map(unit => unit.hp)) || -1
 
   adjacentTargets = adjacentTargets
     .filter(unit => unit.hp == lowestHP) // attack weakest
@@ -142,38 +185,21 @@ const runUnit = (lines, units, unit) => {
     return true
   }
 
-  const targetAdjacentCells = Array.from(targets.reduce((cells, target) => {
-    [[-1, 0], [0, -1], [0, 1], [1, 0]].forEach(adj => {
-      let siteY = target.y + adj[0]
-      let siteX = target.x + adj[1]
-      if ((lines[siteY][siteX] == '.') && !units.some(unit2 =>
-        unit2.hp && (unit2.x == siteX) && (unit2.y == siteY)
-      )) {
-        cells.add(`${siteY},${siteX}`)
-      }
-    })
-    return cells
-  }, new Set([]))).map(string => {
-    let p = string.split(',')
-    return {
-      y: parseInt(p[0]),
-      x: parseInt(p[1])
-    }
-  })
-
-  // console.log('targetAdjacentCells', targetAdjacentCells)
-  runMove(lines, units, unit, targetAdjacentCells)
   return true
 }
 
 const runCombat = (lines, units, unit, target) => {
-  console.log(`Unit[${unit.id}] ${unit.type}:${unit.y},${unit.x}   ATTACK => ${target.type}[${unit.id}] ${target.y},${target.x}`)
+  console.log(`Unit[${unit.id}] ${unit.type}:${unit.y},${unit.x}   ATTACK => ${target.type}[${target.id}] ${target.y},${target.x}`)
   target.hp = Math.max(0, (target.hp - unit.attack))
+
+  if (!target.hp) {
+    console.log(`                 --> KILLED [${target.id}] ${target.type}:${target.y},${target.x}`)
+  }
 }
 
 
 const runMove = (lines, units, unit, targetAdjacentCells) => {
-  let graph = graphBuilder(lines, units)
+  let graph = new Graph(graphBuilder(lines, units))
   // console.log('GRAPH')
   // console.log(graph.grid)
   let start = graph.grid[unit.y][unit.x]
@@ -181,7 +207,7 @@ const runMove = (lines, units, unit, targetAdjacentCells) => {
   let paths = targetAdjacentCells.map(cell => {
     let end = graph.grid[cell.y][cell.x]
     const result = astar.search(graph, start, end)
-    // console.log(`   ${cell.y},${cell.x} path:`, result.length)
+    // console.log(`   ${cell.x},${cell.y} path:`, result.length)
     // result.forEach(path => console.log('   ', path.y, path.x))
     return result.map(n => ({x: n.y, y: n.x})) // Need to flip for some reason
 
@@ -215,72 +241,159 @@ const graphBuilder = (lines, units) => {
     if (cell == '#') {
       return 0
     }
-    if (units.some(unit => (unit.x == x) && (unit.y == y))) {
+    if (units.filter(unit => unit.hp).some(unit => (unit.x == x) && (unit.y == y))) {
       return 0
     }
-    // return 1
+    return 1
     // Weight graph by reading-order... (?)
+    let yScore = lines.length - y + 1
+    let xScore = lines[0].length - x + 1
+    let width = lines[0].length
     return (
-      ((lines.length - y)) +
-      ((lines[0].length - x) * y)
+      (yScore * width) + xScore
+      // ((lines.length - y)) +
+      // (xScore * y)
     )
   }))
-  return new Graph(weights)
+  return weights
 }
 
+const printGraph = (graph, units, key) => graph.forEach((line, y) => {
+  let str = ''
+  let append = '  '
+  line.forEach((cell, x) => {
+    let unit = units.filter(unit => unit.hp).find(unit => (unit.x == x) && (unit.y == y))
+    if (unit) {
+      str += unit.type.padStart(3,' ')
+      // append += `${unit.type}[${unit.id}](${unit.hp}), `
+    }
+    else {
+      if (!cell.weight) {
+        str += '  #'
+      }
+      else if ((cell[key] == null)) {
+        str += '  .'
+      }
+      else {
+        str += String(cell[key]).padStart(3,' ')
+      }
+    }
+  })
+  console.log(str, append)
+})
 
+const runMove2 = (lines, units, unit, targetAdjacentCells, t) => {
+  // let visited =
+  // console.log('GRAPH')
+  // console.log(graph.grid)
+  // let start = graph.grid[unit.y][unit.x]
 
+  let map = graphBuilder(lines, units)
 
+  let bestDistance = Infinity
+  let bestPath = null
+  let bestTarget = null
 
+  for (let target of targetAdjacentCells) {
+    ;(t > 170) && console.log('targetAdjacentCell:', target.y, target.x)
+    let graph = map.map((line, y) => line.map((cell, x) => ({
+      weight: cell,
+      visited: 0,
+      distance: null,
+      y, x
+    })))
+    let start = graph[unit.y][unit.x]
+    // console.log('start', start)
 
+    graph[unit.y][unit.x].distance = 0
+    graph[unit.y][unit.x].visited = 1
 
+    // console.log(graph)
+    ;(t > 170) && console.log('visited:')
+    ;(t > 170) && printGraph(graph, units, 'visited')
+    ;(t > 170) && console.log('distance')
+    ;(t > 170) && printGraph(graph, units, 'distance')
+    ;(t > 170) && console.log('weight')
+    ;(t > 170) && printGraph(graph, units, 'weight')
+    // return
 
+    let distance = 0
+    let noPath = false
 
-// const runMove2 = (lines, units, unit, targetAdjacentCells) => {
-//   let graph = graphBuilder(lines, units)
-//   // console.log('GRAPH')
-//   // console.log(graph.grid)
-//   let start = graph.grid[unit.y][unit.x]
-//
-//   let paths = targetAdjacentCells.map(cell => {
-//     let end = graph.grid[cell.y][cell.x]
-//     const result = astar.search(graph, start, end)
-//     console.log(`   ${cell.y},${cell.x} path:`, result.length)
-//     result.forEach(path => console.log('   ', path.y, path.x))
-//     return result.map(n => ({x: n.y, y: n.x})) // Need to flip for some reason
-//
-//     // path.map(c => `[${c.y}, ${c.x}]`).join(' '))
-//   })
-//     .filter(path => path.length) // no path found
-//     .sort((a,b) => {
-//       if (a.length < b.length) {
-//         return -1
-//       }
-//       else if (a.length > b.length) {
-//         return 1
-//       }
-//       else {
-//         // Tie break with reading-order sort of endpoints
-//         return unitSort(a[a.length-1], b[b.length-1])
-//       }
-//     })
-//
-//   if (paths.length) {
-//     // console.log('Paths', paths.map(p => p.length).join(' '))
-//     console.log(paths[0])
-//     // Now path-find again based on which first step (toward the
-//     // already selected endpoint) has the shortest path.
-//     // The A* above picks one best path, but this algo needs to
-//     // know about the ties from the first move.  If there is
-//     // another path with the same length, but the first step
-//     // is before the chosen path (in reading order), then that
-//     // other path should be chosen.
-//
-//     // adjacentCells. ...
-//
-//     console.log(`   MOVING from ${unit.y},${unit.x} => ${paths[0][0].y},${paths[0][0].x}`)
-//     unit.x = paths[0][0].x
-//     unit.y = paths[0][0].y
-//   }
-//
-// }
+    let visitedAnything
+    while(
+      !noPath &&
+      (distance < bestDistance) &&
+      // (distance < 200) && // just in case... probably should remove
+      graph.some(line => line.some(cell => !cell.visited && cell.weight))
+    ) {
+      let visited = []
+      graph.forEach(line => line.forEach(cell => {
+        if (cell.visited && cell.distance == distance) {
+          visited.push(cell)
+        }
+      }))
+      distance++
+      // if (distance > bestDistance) {
+      //   break
+      // }
+      ;(t > 170) && console.log('=== finding distance', distance, '(best)', bestDistance)
+      visitedAnything = false
+      visited.forEach(cell => {
+        ;(t > 170) && console.log(`visited cell ${cell.y},${cell.x} ==>`)
+        for (let a of adjacentCells) {
+          let y = cell.y + a.y
+          let x = cell.x + a.x
+
+          ;(t > 170) && console.log(`  adj cell ${y},${x} w${graph[y][x].weight} v${graph[y][x].visited}`)
+
+          if (graph[y][x].weight && !graph[y][x].visited) {
+            graph[y][x].distance = distance
+            graph[y][x].visited = 1
+            graph[y][x].parent = cell
+            visitedAnything = true
+            ;(t > 170) && console.log('      --> visited')
+          }
+
+          if (target.y == y && target.x == x) {
+            ;(t > 170) && console.log(`FOUND hit at ${y},${x} from ${cell.y},${cell.x}`)
+            if (distance < bestDistance) {
+              ;(t > 170) && console.log('new best', distance)
+              bestDistance = distance
+              bestTarget = target
+              bestPath = [graph[y][x]]
+              let parent = bestPath[0].parent
+              while(parent !== start) {
+                bestPath.unshift(parent)
+                parent = bestPath[0].parent
+              }
+            }
+          }
+        }
+      })
+      if (!visitedAnything) {
+        ;(t > 170) && console.log('!!!!')
+        noPath = true
+        break
+      }
+
+      // console.log('visited:')
+      // printGraph(graph, units, 'visited')
+      ;(t > 170) && console.log('distance')
+      ;(t > 170) && printGraph(graph, units, 'distance')
+    }
+  }
+
+  if (bestPath) {
+    ;(t > 170) && console.log('bestDistance', bestDistance)
+    ;(t > 170) && console.log('bestPath')
+    ;(t > 170) && console.log(bestPath.map(p => `${p.y},${p.x}`).join(' => '))
+    ;(t > 170) && console.log('^^^^^^^^^^^^^^^^^^^^^^^^^^^^^')
+
+    unit.x = bestPath[0].x
+    unit.y = bestPath[0].y
+  }
+  else {
+    ;(t > 170) && console.log('no path')
+  }
+}
