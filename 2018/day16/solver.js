@@ -1,8 +1,6 @@
 import path from 'path'
 import {readFile, getLines} from '../../common'
 
-import {astar, Graph} from '../../astar'
-
 readFile(path.resolve(process.argv[2] || 'input.txt'))
   .then(data => {
     solver(
