@@ -140,7 +140,7 @@ let neighbor = node => {
       return;
     }
     const newNode = node.set(0, newFloor)
-    items = itemIndexesOnFloor(newNode, oldFloor)
+    let items = itemIndexesOnFloor(newNode, oldFloor)
     const combos = itemCombinations(items);
     combos.forEach(combo => {
       let newNode2 = newNode.set(combo[0], newFloor);
