@@ -11,10 +11,6 @@ readFile(path.resolve(process.argv[2] || 'input.txt'))
     console.error(err)
   })
 
-const hasSand = (lines, x, y) => {
-
-}
-
 const rx = /([xy])=([\d]*), [xy]=([\d]*)..([\d]*)/
 
 const getData = lines => {
