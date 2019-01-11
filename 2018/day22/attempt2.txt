@@ -1,0 +1,1033 @@
+-------------t 0 1
+-------------t 100 7185
+-------------t 200 29416
+-------------t 300 59978
+-------------t 400 85322
+-------------t 500 109612
+-------------t 600 133929
+-------------t 700 157114
+-------------t 800 181468
+-------------t 900 204810
+-------------t 1000 228707
+******************************************************************
+  0,  0 rocky   with torch    (2) at 0
+  0,  1 narrow  with torch    (2) at 1
+  1,  1 narrow  with torch    (2) at 2
+  1,  2 rocky   with torch    (2) at 3
+  1,  3 rocky   with torch    (2) at 4
+  1,  4 narrow  with torch    (2) at 5
+  1,  5 rocky   with torch    (2) at 6
+  1,  6 rocky   with torch    (2) at 7
+  1,  7 narrow  with torch    (2) at 8
+  2,  7 rocky   with torch    (2) at 9
+  3,  7 narrow  with torch    (2) at 10
+  4,  7 rocky   with torch    (2) at 11
+  5,  7 rocky   with torch    (2) at 12
+  6,  7 rocky   with torch    (2) at 13
+  7,  7 narrow  with torch    (2) at 14
+  7,  8 narrow  with torch    (2) at 15
+  8,  8 narrow  with torch    (2) at 16
+  8,  9 rocky   with torch    (2) at 17
+  9,  9 rocky   with torch    (2) at 18
+ 10,  9 rocky   with torch    (2) at 19
+ 11,  9 rocky   with torch    (2) at 20
+ 12,  9 rocky   with torch    (2) at 21
+ 13,  9 rocky   with torch    (2) at 22
+ 14,  9 narrow  with torch    (2) at 23
+ 14, 10 rocky   with torch    (2) at 24
+ 15, 10 rocky   with torch    (2) at 25
+ 16, 10 rocky   with torch    (2) at 26
+ 16, 11 rocky   with torch    (2) at 27
+ 16, 12 narrow  with torch    (2) at 28
+ 17, 12 narrow  with torch    (2) at 29
+ 18, 12 rocky   with torch    (2) at 30
+ 19, 12 rocky   with torch    (2) at 31
+ 20, 12 narrow  with torch    (2) at 32
+ 21, 12 rocky   with torch    (2) at 33
+ 22, 12 rocky   with torch    (2) at 34
+ 23, 12 rocky   with torch    (2) at 35
+ 24, 12 rocky   with torch    (2) at 36
+ 25, 12 rocky   with torch    (2) at 37
+ 26, 12 narrow  with torch    (2) at 38
+ 27, 12 narrow  with torch    (2) at 39
+ 28, 12 narrow  with torch    (2) at 40
+ 28, 11 narrow  with torch    (2) at 41
+ 28, 10 narrow  with torch    (2) at 42
+ 28,  9 narrow  with torch    (2) at 43
+ 29,  9 narrow  with torch    (2) at 44
+ 30,  9 narrow  with torch    (2) at 45
+ 31,  9 rocky   with torch    (2) at 46
+ 32,  9 narrow  with torch    (2) at 47
+ 33,  9 rocky   with torch    (2) at 48
+ 33, 10 rocky   with torch    (2) at 49
+ 34, 10 rocky   with torch    (2) at 50
+ 35, 10 narrow  with torch    (2) at 51
+ 36, 10 rocky   with torch    (2) at 52
+ 37, 10 rocky   with torch    (2) at 53
+   switched tools from torch     to climbing
+ 38, 10 wet     with climbing (1) at 61
+ 39, 10 rocky   with climbing (1) at 62
+ 40, 10 wet     with climbing (1) at 63
+ 41, 10 rocky   with climbing (1) at 64
+ 42, 10 wet     with climbing (1) at 65
+ 43, 10 rocky   with climbing (1) at 66
+ 44, 10 wet     with climbing (1) at 67
+ 45, 10 rocky   with climbing (1) at 68
+ 46, 10 wet     with climbing (1) at 69
+ 47, 10 rocky   with climbing (1) at 70
+ 47, 11 rocky   with climbing (1) at 71
+ 47, 12 rocky   with climbing (1) at 72
+ 48, 12 rocky   with climbing (1) at 73
+ 49, 12 rocky   with climbing (1) at 74
+ 50, 12 rocky   with climbing (1) at 75
+ 51, 12 wet     with climbing (1) at 76
+ 52, 12 rocky   with climbing (1) at 77
+ 53, 12 rocky   with climbing (1) at 78
+ 54, 12 wet     with climbing (1) at 79
+ 54, 13 rocky   with climbing (1) at 80
+ 55, 13 wet     with climbing (1) at 81
+ 56, 13 rocky   with climbing (1) at 82
+ 56, 14 rocky   with climbing (1) at 83
+ 57, 14 wet     with climbing (1) at 84
+ 58, 14 wet     with climbing (1) at 85
+ 58, 15 rocky   with climbing (1) at 86
+ 58, 16 rocky   with climbing (1) at 87
+ 58, 17 rocky   with climbing (1) at 88
+ 58, 18 wet     with climbing (1) at 89
+ 58, 19 wet     with climbing (1) at 90
+ 59, 19 rocky   with climbing (1) at 91
+ 60, 19 rocky   with climbing (1) at 92
+ 61, 19 rocky   with climbing (1) at 93
+ 62, 19 rocky   with climbing (1) at 94
+ 62, 20 rocky   with climbing (1) at 95
+ 62, 21 rocky   with climbing (1) at 96
+ 62, 22 rocky   with climbing (1) at 97
+ 63, 22 rocky   with climbing (1) at 98
+ 64, 22 wet     with climbing (1) at 99
+ 65, 22 rocky   with climbing (1) at 100
+ 66, 22 wet     with climbing (1) at 101
+ 67, 22 wet     with climbing (1) at 102
+ 68, 22 wet     with climbing (1) at 103
+ 69, 22 wet     with climbing (1) at 104
+ 70, 22 rocky   with climbing (1) at 105
+ 71, 22 rocky   with climbing (1) at 106
+ 72, 22 wet     with climbing (1) at 107
+ 73, 22 rocky   with climbing (1) at 108
+ 74, 22 rocky   with climbing (1) at 109
+ 75, 22 rocky   with climbing (1) at 110
+ 76, 22 wet     with climbing (1) at 111
+ 77, 22 rocky   with climbing (1) at 112
+ 78, 22 rocky   with climbing (1) at 113
+ 79, 22 wet     with climbing (1) at 114
+ 80, 22 wet     with climbing (1) at 115
+ 81, 22 wet     with climbing (1) at 116
+ 82, 22 wet     with climbing (1) at 117
+ 83, 22 rocky   with climbing (1) at 118
+ 84, 22 rocky   with climbing (1) at 119
+ 85, 22 rocky   with climbing (1) at 120
+ 86, 22 rocky   with climbing (1) at 121
+ 86, 21 rocky   with climbing (1) at 122
+ 86, 20 rocky   with climbing (1) at 123
+ 85, 20 rocky   with climbing (1) at 124
+ 85, 19 rocky   with climbing (1) at 125
+ 85, 18 rocky   with climbing (1) at 126
+ 85, 17 rocky   with climbing (1) at 127
+ 86, 17 rocky   with climbing (1) at 128
+ 86, 16 wet     with climbing (1) at 129
+ 86, 15 wet     with climbing (1) at 130
+ 87, 15 rocky   with climbing (1) at 131
+ 87, 14 rocky   with climbing (1) at 132
+ 88, 14 wet     with climbing (1) at 133
+ 88, 13 rocky   with climbing (1) at 134
+ 89, 13 rocky   with climbing (1) at 135
+ 90, 13 rocky   with climbing (1) at 136
+ 91, 13 rocky   with climbing (1) at 137
+ 92, 13 rocky   with climbing (1) at 138
+ 93, 13 wet     with climbing (1) at 139
+ 93, 12 rocky   with climbing (1) at 140
+ 93, 11 wet     with climbing (1) at 141
+ 93, 10 wet     with climbing (1) at 142
+ 94, 10 rocky   with climbing (1) at 143
+ 95, 10 wet     with climbing (1) at 144
+ 96, 10 wet     with climbing (1) at 145
+ 96,  9 wet     with climbing (1) at 146
+ 97,  9 rocky   with climbing (1) at 147
+ 98,  9 wet     with climbing (1) at 148
+ 99,  9 rocky   with climbing (1) at 149
+100,  9 rocky   with climbing (1) at 150
+100,  8 wet     with climbing (1) at 151
+101,  8 wet     with climbing (1) at 152
+102,  8 rocky   with climbing (1) at 153
+103,  8 rocky   with climbing (1) at 154
+104,  8 wet     with climbing (1) at 155
+105,  8 rocky   with climbing (1) at 156
+105,  9 wet     with climbing (1) at 157
+106,  9 wet     with climbing (1) at 158
+107,  9 rocky   with climbing (1) at 159
+107, 10 rocky   with climbing (1) at 160
+108, 10 rocky   with climbing (1) at 161
+109, 10 rocky   with climbing (1) at 162
+110, 10 rocky   with climbing (1) at 163
+111, 10 rocky   with climbing (1) at 164
+112, 10 wet     with climbing (1) at 165
+113, 10 rocky   with climbing (1) at 166
+114, 10 wet     with climbing (1) at 167
+115, 10 rocky   with climbing (1) at 168
+116, 10 rocky   with climbing (1) at 169
+116,  9 wet     with climbing (1) at 170
+116,  8 rocky   with climbing (1) at 171
+116,  7 rocky   with climbing (1) at 172
+116,  6 wet     with climbing (1) at 173
+117,  6 wet     with climbing (1) at 174
+118,  6 wet     with climbing (1) at 175
+118,  7 wet     with climbing (1) at 176
+119,  7 wet     with climbing (1) at 177
+119,  8 rocky   with climbing (1) at 178
+119,  9 rocky   with climbing (1) at 179
+120,  9 wet     with climbing (1) at 180
+121,  9 rocky   with climbing (1) at 181
+122,  9 wet     with climbing (1) at 182
+123,  9 wet     with climbing (1) at 183
+124,  9 wet     with climbing (1) at 184
+125,  9 wet     with climbing (1) at 185
+126,  9 rocky   with climbing (1) at 186
+127,  9 rocky   with climbing (1) at 187
+128,  9 rocky   with climbing (1) at 188
+128,  8 wet     with climbing (1) at 189
+129,  8 wet     with climbing (1) at 190
+129,  7 wet     with climbing (1) at 191
+130,  7 rocky   with climbing (1) at 192
+131,  7 rocky   with climbing (1) at 193
+132,  7 wet     with climbing (1) at 194
+133,  7 wet     with climbing (1) at 195
+134,  7 wet     with climbing (1) at 196
+135,  7 wet     with climbing (1) at 197
+136,  7 wet     with climbing (1) at 198
+137,  7 wet     with climbing (1) at 199
+137,  6 rocky   with climbing (1) at 200
+138,  6 wet     with climbing (1) at 201
+139,  6 wet     with climbing (1) at 202
+140,  6 rocky   with climbing (1) at 203
+141,  6 rocky   with climbing (1) at 204
+142,  6 rocky   with climbing (1) at 205
+143,  6 wet     with climbing (1) at 206
+144,  6 rocky   with climbing (1) at 207
+145,  6 wet     with climbing (1) at 208
+146,  6 wet     with climbing (1) at 209
+147,  6 wet     with climbing (1) at 210
+148,  6 wet     with climbing (1) at 211
+149,  6 rocky   with climbing (1) at 212
+149,  5 rocky   with climbing (1) at 213
+150,  5 wet     with climbing (1) at 214
+151,  5 wet     with climbing (1) at 215
+152,  5 wet     with climbing (1) at 216
+153,  5 wet     with climbing (1) at 217
+154,  5 rocky   with climbing (1) at 218
+155,  5 wet     with climbing (1) at 219
+156,  5 rocky   with climbing (1) at 220
+157,  5 wet     with climbing (1) at 221
+158,  5 rocky   with climbing (1) at 222
+159,  5 rocky   with climbing (1) at 223
+160,  5 rocky   with climbing (1) at 224
+161,  5 wet     with climbing (1) at 225
+162,  5 rocky   with climbing (1) at 226
+163,  5 rocky   with climbing (1) at 227
+164,  5 wet     with climbing (1) at 228
+165,  5 wet     with climbing (1) at 229
+166,  5 rocky   with climbing (1) at 230
+167,  5 rocky   with climbing (1) at 231
+167,  6 rocky   with climbing (1) at 232
+168,  6 rocky   with climbing (1) at 233
+169,  6 wet     with climbing (1) at 234
+170,  6 wet     with climbing (1) at 235
+   switched tools from climbing  to neither
+171,  6 narrow  with neither  (0) at 243
+172,  6 narrow  with neither  (0) at 244
+172,  7 wet     with neither  (0) at 245
+173,  7 narrow  with neither  (0) at 246
+174,  7 narrow  with neither  (0) at 247
+175,  7 narrow  with neither  (0) at 248
+175,  8 narrow  with neither  (0) at 249
+176,  8 narrow  with neither  (0) at 250
+177,  8 wet     with neither  (0) at 251
+177,  9 narrow  with neither  (0) at 252
+178,  9 narrow  with neither  (0) at 253
+179,  9 narrow  with neither  (0) at 254
+180,  9 narrow  with neither  (0) at 255
+180, 10 wet     with neither  (0) at 256
+181, 10 wet     with neither  (0) at 257
+181, 11 wet     with neither  (0) at 258
+181, 12 narrow  with neither  (0) at 259
+182, 12 narrow  with neither  (0) at 260
+183, 12 narrow  with neither  (0) at 261
+183, 11 narrow  with neither  (0) at 262
+184, 11 wet     with neither  (0) at 263
+185, 11 narrow  with neither  (0) at 264
+185, 10 wet     with neither  (0) at 265
+186, 10 wet     with neither  (0) at 266
+187, 10 wet     with neither  (0) at 267
+188, 10 wet     with neither  (0) at 268
+188,  9 wet     with neither  (0) at 269
+188,  8 wet     with neither  (0) at 270
+189,  8 narrow  with neither  (0) at 271
+190,  8 wet     with neither  (0) at 272
+191,  8 narrow  with neither  (0) at 273
+192,  8 narrow  with neither  (0) at 274
+193,  8 wet     with neither  (0) at 275
+194,  8 narrow  with neither  (0) at 276
+195,  8 narrow  with neither  (0) at 277
+196,  8 narrow  with neither  (0) at 278
+197,  8 narrow  with neither  (0) at 279
+198,  8 narrow  with neither  (0) at 280
+199,  8 narrow  with neither  (0) at 281
+200,  8 narrow  with neither  (0) at 282
+201,  8 wet     with neither  (0) at 283
+202,  8 wet     with neither  (0) at 284
+203,  8 wet     with neither  (0) at 285
+204,  8 wet     with neither  (0) at 286
+205,  8 narrow  with neither  (0) at 287
+206,  8 narrow  with neither  (0) at 288
+206,  7 wet     with neither  (0) at 289
+207,  7 wet     with neither  (0) at 290
+207,  6 wet     with neither  (0) at 291
+208,  6 wet     with neither  (0) at 292
+209,  6 wet     with neither  (0) at 293
+210,  6 narrow  with neither  (0) at 294
+211,  6 narrow  with neither  (0) at 295
+211,  5 narrow  with neither  (0) at 296
+212,  5 narrow  with neither  (0) at 297
+213,  5 wet     with neither  (0) at 298
+214,  5 narrow  with neither  (0) at 299
+215,  5 wet     with neither  (0) at 300
+215,  6 narrow  with neither  (0) at 301
+216,  6 wet     with neither  (0) at 302
+217,  6 narrow  with neither  (0) at 303
+218,  6 narrow  with neither  (0) at 304
+219,  6 wet     with neither  (0) at 305
+220,  6 narrow  with neither  (0) at 306
+221,  6 wet     with neither  (0) at 307
+221,  7 wet     with neither  (0) at 308
+222,  7 narrow  with neither  (0) at 309
+223,  7 narrow  with neither  (0) at 310
+223,  8 wet     with neither  (0) at 311
+223,  9 narrow  with neither  (0) at 312
+223, 10 narrow  with neither  (0) at 313
+224, 10 narrow  with neither  (0) at 314
+225, 10 wet     with neither  (0) at 315
+226, 10 wet     with neither  (0) at 316
+227, 10 wet     with neither  (0) at 317
+228, 10 wet     with neither  (0) at 318
+229, 10 narrow  with neither  (0) at 319
+230, 10 wet     with neither  (0) at 320
+230,  9 narrow  with neither  (0) at 321
+230,  8 wet     with neither  (0) at 322
+231,  8 narrow  with neither  (0) at 323
+232,  8 wet     with neither  (0) at 324
+232,  7 wet     with neither  (0) at 325
+233,  7 wet     with neither  (0) at 326
+234,  7 wet     with neither  (0) at 327
+235,  7 wet     with neither  (0) at 328
+235,  6 wet     with neither  (0) at 329
+236,  6 narrow  with neither  (0) at 330
+237,  6 wet     with neither  (0) at 331
+238,  6 narrow  with neither  (0) at 332
+239,  6 narrow  with neither  (0) at 333
+240,  6 narrow  with neither  (0) at 334
+240,  7 wet     with neither  (0) at 335
+241,  7 wet     with neither  (0) at 336
+242,  7 narrow  with neither  (0) at 337
+243,  7 narrow  with neither  (0) at 338
+244,  7 narrow  with neither  (0) at 339
+244,  6 narrow  with neither  (0) at 340
+244,  5 narrow  with neither  (0) at 341
+245,  5 narrow  with neither  (0) at 342
+246,  5 wet     with neither  (0) at 343
+246,  6 wet     with neither  (0) at 344
+246,  7 narrow  with neither  (0) at 345
+246,  8 wet     with neither  (0) at 346
+246,  9 wet     with neither  (0) at 347
+247,  9 wet     with neither  (0) at 348
+248,  9 narrow  with neither  (0) at 349
+249,  9 narrow  with neither  (0) at 350
+250,  9 wet     with neither  (0) at 351
+251,  9 narrow  with neither  (0) at 352
+252,  9 narrow  with neither  (0) at 353
+253,  9 narrow  with neither  (0) at 354
+254,  9 wet     with neither  (0) at 355
+254,  8 wet     with neither  (0) at 356
+255,  8 narrow  with neither  (0) at 357
+256,  8 narrow  with neither  (0) at 358
+257,  8 narrow  with neither  (0) at 359
+257,  9 narrow  with neither  (0) at 360
+257, 10 narrow  with neither  (0) at 361
+258, 10 narrow  with neither  (0) at 362
+259, 10 wet     with neither  (0) at 363
+260, 10 wet     with neither  (0) at 364
+261, 10 wet     with neither  (0) at 365
+262, 10 wet     with neither  (0) at 366
+262, 11 wet     with neither  (0) at 367
+262, 12 wet     with neither  (0) at 368
+263, 12 narrow  with neither  (0) at 369
+264, 12 wet     with neither  (0) at 370
+264, 11 narrow  with neither  (0) at 371
+265, 11 wet     with neither  (0) at 372
+266, 11 narrow  with neither  (0) at 373
+267, 11 wet     with neither  (0) at 374
+267, 10 narrow  with neither  (0) at 375
+268, 10 wet     with neither  (0) at 376
+269, 10 narrow  with neither  (0) at 377
+270, 10 narrow  with neither  (0) at 378
+271, 10 narrow  with neither  (0) at 379
+272, 10 wet     with neither  (0) at 380
+272,  9 wet     with neither  (0) at 381
+273,  9 narrow  with neither  (0) at 382
+274,  9 narrow  with neither  (0) at 383
+275,  9 narrow  with neither  (0) at 384
+276,  9 narrow  with neither  (0) at 385
+277,  9 narrow  with neither  (0) at 386
+278,  9 narrow  with neither  (0) at 387
+279,  9 narrow  with neither  (0) at 388
+280,  9 narrow  with neither  (0) at 389
+281,  9 wet     with neither  (0) at 390
+282,  9 wet     with neither  (0) at 391
+283,  9 wet     with neither  (0) at 392
+284,  9 narrow  with neither  (0) at 393
+284, 10 narrow  with neither  (0) at 394
+285, 10 wet     with neither  (0) at 395
+286, 10 wet     with neither  (0) at 396
+287, 10 wet     with neither  (0) at 397
+288, 10 narrow  with neither  (0) at 398
+289, 10 narrow  with neither  (0) at 399
+290, 10 wet     with neither  (0) at 400
+290,  9 narrow  with neither  (0) at 401
+291,  9 wet     with neither  (0) at 402
+292,  9 narrow  with neither  (0) at 403
+292,  8 wet     with neither  (0) at 404
+292,  7 wet     with neither  (0) at 405
+292,  6 wet     with neither  (0) at 406
+293,  6 wet     with neither  (0) at 407
+294,  6 wet     with neither  (0) at 408
+295,  6 narrow  with neither  (0) at 409
+296,  6 wet     with neither  (0) at 410
+296,  5 wet     with neither  (0) at 411
+296,  4 narrow  with neither  (0) at 412
+295,  4 wet     with neither  (0) at 413
+295,  3 wet     with neither  (0) at 414
+295,  2 wet     with neither  (0) at 415
+296,  2 wet     with neither  (0) at 416
+297,  2 narrow  with neither  (0) at 417
+298,  2 wet     with neither  (0) at 418
+299,  2 wet     with neither  (0) at 419
+299,  3 narrow  with neither  (0) at 420
+300,  3 wet     with neither  (0) at 421
+301,  3 wet     with neither  (0) at 422
+302,  3 narrow  with neither  (0) at 423
+302,  2 wet     with neither  (0) at 424
+303,  2 narrow  with neither  (0) at 425
+304,  2 wet     with neither  (0) at 426
+305,  2 wet     with neither  (0) at 427
+306,  2 wet     with neither  (0) at 428
+307,  2 narrow  with neither  (0) at 429
+307,  3 wet     with neither  (0) at 430
+308,  3 wet     with neither  (0) at 431
+309,  3 narrow  with neither  (0) at 432
+310,  3 wet     with neither  (0) at 433
+311,  3 narrow  with neither  (0) at 434
+312,  3 wet     with neither  (0) at 435
+313,  3 narrow  with neither  (0) at 436
+314,  3 wet     with neither  (0) at 437
+315,  3 wet     with neither  (0) at 438
+315,  4 narrow  with neither  (0) at 439
+316,  4 narrow  with neither  (0) at 440
+317,  4 narrow  with neither  (0) at 441
+318,  4 narrow  with neither  (0) at 442
+319,  4 narrow  with neither  (0) at 443
+320,  4 narrow  with neither  (0) at 444
+321,  4 wet     with neither  (0) at 445
+322,  4 wet     with neither  (0) at 446
+323,  4 narrow  with neither  (0) at 447
+324,  4 narrow  with neither  (0) at 448
+325,  4 wet     with neither  (0) at 449
+326,  4 wet     with neither  (0) at 450
+327,  4 wet     with neither  (0) at 451
+327,  5 wet     with neither  (0) at 452
+328,  5 wet     with neither  (0) at 453
+329,  5 wet     with neither  (0) at 454
+330,  5 wet     with neither  (0) at 455
+331,  5 wet     with neither  (0) at 456
+332,  5 narrow  with neither  (0) at 457
+333,  5 wet     with neither  (0) at 458
+334,  5 wet     with neither  (0) at 459
+335,  5 wet     with neither  (0) at 460
+336,  5 wet     with neither  (0) at 461
+337,  5 wet     with neither  (0) at 462
+338,  5 narrow  with neither  (0) at 463
+339,  5 wet     with neither  (0) at 464
+339,  6 wet     with neither  (0) at 465
+340,  6 wet     with neither  (0) at 466
+341,  6 narrow  with neither  (0) at 467
+341,  5 wet     with neither  (0) at 468
+342,  5 narrow  with neither  (0) at 469
+343,  5 narrow  with neither  (0) at 470
+343,  4 wet     with neither  (0) at 471
+344,  4 narrow  with neither  (0) at 472
+345,  4 narrow  with neither  (0) at 473
+345,  5 wet     with neither  (0) at 474
+346,  5 narrow  with neither  (0) at 475
+347,  5 wet     with neither  (0) at 476
+348,  5 narrow  with neither  (0) at 477
+349,  5 wet     with neither  (0) at 478
+350,  5 wet     with neither  (0) at 479
+350,  6 wet     with neither  (0) at 480
+351,  6 wet     with neither  (0) at 481
+352,  6 narrow  with neither  (0) at 482
+353,  6 wet     with neither  (0) at 483
+354,  6 wet     with neither  (0) at 484
+355,  6 wet     with neither  (0) at 485
+355,  5 wet     with neither  (0) at 486
+356,  5 narrow  with neither  (0) at 487
+356,  4 wet     with neither  (0) at 488
+357,  4 wet     with neither  (0) at 489
+358,  4 narrow  with neither  (0) at 490
+358,  5 narrow  with neither  (0) at 491
+358,  6 wet     with neither  (0) at 492
+359,  6 narrow  with neither  (0) at 493
+359,  7 narrow  with neither  (0) at 494
+360,  7 wet     with neither  (0) at 495
+361,  7 narrow  with neither  (0) at 496
+361,  8 wet     with neither  (0) at 497
+361,  9 wet     with neither  (0) at 498
+362,  9 narrow  with neither  (0) at 499
+362, 10 wet     with neither  (0) at 500
+363, 10 narrow  with neither  (0) at 501
+364, 10 narrow  with neither  (0) at 502
+365, 10 narrow  with neither  (0) at 503
+366, 10 wet     with neither  (0) at 504
+367, 10 narrow  with neither  (0) at 505
+368, 10 wet     with neither  (0) at 506
+368,  9 narrow  with neither  (0) at 507
+368,  8 narrow  with neither  (0) at 508
+369,  8 wet     with neither  (0) at 509
+370,  8 narrow  with neither  (0) at 510
+371,  8 wet     with neither  (0) at 511
+371,  9 narrow  with neither  (0) at 512
+372,  9 narrow  with neither  (0) at 513
+373,  9 narrow  with neither  (0) at 514
+373, 10 narrow  with neither  (0) at 515
+374, 10 narrow  with neither  (0) at 516
+374, 11 narrow  with neither  (0) at 517
+374, 12 narrow  with neither  (0) at 518
+375, 12 wet     with neither  (0) at 519
+376, 12 narrow  with neither  (0) at 520
+377, 12 narrow  with neither  (0) at 521
+378, 12 narrow  with neither  (0) at 522
+379, 12 wet     with neither  (0) at 523
+380, 12 wet     with neither  (0) at 524
+381, 12 narrow  with neither  (0) at 525
+382, 12 wet     with neither  (0) at 526
+383, 12 narrow  with neither  (0) at 527
+383, 13 wet     with neither  (0) at 528
+384, 13 wet     with neither  (0) at 529
+385, 13 wet     with neither  (0) at 530
+386, 13 narrow  with neither  (0) at 531
+386, 14 wet     with neither  (0) at 532
+387, 14 narrow  with neither  (0) at 533
+388, 14 wet     with neither  (0) at 534
+388, 15 narrow  with neither  (0) at 535
+388, 16 wet     with neither  (0) at 536
+389, 16 narrow  with neither  (0) at 537
+390, 16 wet     with neither  (0) at 538
+391, 16 wet     with neither  (0) at 539
+392, 16 wet     with neither  (0) at 540
+393, 16 narrow  with neither  (0) at 541
+394, 16 wet     with neither  (0) at 542
+394, 17 wet     with neither  (0) at 543
+395, 17 wet     with neither  (0) at 544
+396, 17 wet     with neither  (0) at 545
+396, 18 wet     with neither  (0) at 546
+397, 18 narrow  with neither  (0) at 547
+397, 19 wet     with neither  (0) at 548
+398, 19 narrow  with neither  (0) at 549
+398, 20 narrow  with neither  (0) at 550
+398, 21 wet     with neither  (0) at 551
+399, 21 wet     with neither  (0) at 552
+400, 21 narrow  with neither  (0) at 553
+401, 21 narrow  with neither  (0) at 554
+402, 21 narrow  with neither  (0) at 555
+402, 20 wet     with neither  (0) at 556
+403, 20 narrow  with neither  (0) at 557
+404, 20 narrow  with neither  (0) at 558
+405, 20 wet     with neither  (0) at 559
+406, 20 wet     with neither  (0) at 560
+407, 20 narrow  with neither  (0) at 561
+408, 20 narrow  with neither  (0) at 562
+408, 21 wet     with neither  (0) at 563
+409, 21 narrow  with neither  (0) at 564
+409, 22 wet     with neither  (0) at 565
+410, 22 wet     with neither  (0) at 566
+411, 22 narrow  with neither  (0) at 567
+412, 22 wet     with neither  (0) at 568
+413, 22 narrow  with neither  (0) at 569
+414, 22 wet     with neither  (0) at 570
+415, 22 narrow  with neither  (0) at 571
+416, 22 wet     with neither  (0) at 572
+417, 22 narrow  with neither  (0) at 573
+418, 22 narrow  with neither  (0) at 574
+418, 23 wet     with neither  (0) at 575
+419, 23 narrow  with neither  (0) at 576
+420, 23 narrow  with neither  (0) at 577
+421, 23 wet     with neither  (0) at 578
+422, 23 wet     with neither  (0) at 579
+423, 23 narrow  with neither  (0) at 580
+424, 23 wet     with neither  (0) at 581
+425, 23 narrow  with neither  (0) at 582
+426, 23 narrow  with neither  (0) at 583
+427, 23 wet     with neither  (0) at 584
+427, 22 narrow  with neither  (0) at 585
+427, 21 wet     with neither  (0) at 586
+428, 21 wet     with neither  (0) at 587
+429, 21 narrow  with neither  (0) at 588
+430, 21 wet     with neither  (0) at 589
+430, 20 narrow  with neither  (0) at 590
+431, 20 narrow  with neither  (0) at 591
+432, 20 narrow  with neither  (0) at 592
+433, 20 narrow  with neither  (0) at 593
+434, 20 wet     with neither  (0) at 594
+435, 20 wet     with neither  (0) at 595
+435, 21 narrow  with neither  (0) at 596
+436, 21 narrow  with neither  (0) at 597
+437, 21 wet     with neither  (0) at 598
+438, 21 narrow  with neither  (0) at 599
+439, 21 narrow  with neither  (0) at 600
+440, 21 wet     with neither  (0) at 601
+441, 21 wet     with neither  (0) at 602
+442, 21 wet     with neither  (0) at 603
+442, 22 wet     with neither  (0) at 604
+442, 23 narrow  with neither  (0) at 605
+442, 24 narrow  with neither  (0) at 606
+442, 25 wet     with neither  (0) at 607
+443, 25 narrow  with neither  (0) at 608
+444, 25 narrow  with neither  (0) at 609
+445, 25 narrow  with neither  (0) at 610
+446, 25 wet     with neither  (0) at 611
+447, 25 wet     with neither  (0) at 612
+448, 25 wet     with neither  (0) at 613
+449, 25 narrow  with neither  (0) at 614
+450, 25 narrow  with neither  (0) at 615
+450, 26 wet     with neither  (0) at 616
+451, 26 narrow  with neither  (0) at 617
+452, 26 wet     with neither  (0) at 618
+452, 27 narrow  with neither  (0) at 619
+452, 28 narrow  with neither  (0) at 620
+453, 28 wet     with neither  (0) at 621
+453, 29 wet     with neither  (0) at 622
+454, 29 wet     with neither  (0) at 623
+455, 29 wet     with neither  (0) at 624
+456, 29 narrow  with neither  (0) at 625
+456, 30 narrow  with neither  (0) at 626
+457, 30 wet     with neither  (0) at 627
+458, 30 narrow  with neither  (0) at 628
+459, 30 wet     with neither  (0) at 629
+460, 30 narrow  with neither  (0) at 630
+461, 30 wet     with neither  (0) at 631
+461, 31 wet     with neither  (0) at 632
+462, 31 wet     with neither  (0) at 633
+463, 31 wet     with neither  (0) at 634
+464, 31 wet     with neither  (0) at 635
+465, 31 wet     with neither  (0) at 636
+466, 31 wet     with neither  (0) at 637
+467, 31 wet     with neither  (0) at 638
+468, 31 narrow  with neither  (0) at 639
+469, 31 wet     with neither  (0) at 640
+470, 31 wet     with neither  (0) at 641
+471, 31 narrow  with neither  (0) at 642
+471, 32 wet     with neither  (0) at 643
+472, 32 wet     with neither  (0) at 644
+   switched tools from neither   to climbing
+473, 32 rocky   with climbing (1) at 652
+474, 32 rocky   with climbing (1) at 653
+475, 32 rocky   with climbing (1) at 654
+476, 32 wet     with climbing (1) at 655
+477, 32 rocky   with climbing (1) at 656
+478, 32 wet     with climbing (1) at 657
+478, 31 wet     with climbing (1) at 658
+478, 30 rocky   with climbing (1) at 659
+479, 30 wet     with climbing (1) at 660
+480, 30 rocky   with climbing (1) at 661
+481, 30 wet     with climbing (1) at 662
+482, 30 rocky   with climbing (1) at 663
+483, 30 wet     with climbing (1) at 664
+484, 30 rocky   with climbing (1) at 665
+485, 30 wet     with climbing (1) at 666
+486, 30 wet     with climbing (1) at 667
+487, 30 rocky   with climbing (1) at 668
+487, 29 rocky   with climbing (1) at 669
+487, 28 rocky   with climbing (1) at 670
+488, 28 rocky   with climbing (1) at 671
+489, 28 rocky   with climbing (1) at 672
+489, 27 rocky   with climbing (1) at 673
+490, 27 wet     with climbing (1) at 674
+490, 26 wet     with climbing (1) at 675
+491, 26 wet     with climbing (1) at 676
+492, 26 rocky   with climbing (1) at 677
+493, 26 wet     with climbing (1) at 678
+494, 26 wet     with climbing (1) at 679
+495, 26 rocky   with climbing (1) at 680
+495, 25 wet     with climbing (1) at 681
+496, 25 wet     with climbing (1) at 682
+497, 25 wet     with climbing (1) at 683
+498, 25 rocky   with climbing (1) at 684
+499, 25 wet     with climbing (1) at 685
+500, 25 rocky   with climbing (1) at 686
+501, 25 wet     with climbing (1) at 687
+501, 26 wet     with climbing (1) at 688
+502, 26 rocky   with climbing (1) at 689
+502, 27 rocky   with climbing (1) at 690
+503, 27 rocky   with climbing (1) at 691
+504, 27 wet     with climbing (1) at 692
+505, 27 rocky   with climbing (1) at 693
+506, 27 wet     with climbing (1) at 694
+507, 27 wet     with climbing (1) at 695
+508, 27 wet     with climbing (1) at 696
+509, 27 wet     with climbing (1) at 697
+510, 27 wet     with climbing (1) at 698
+511, 27 rocky   with climbing (1) at 699
+512, 27 rocky   with climbing (1) at 700
+513, 27 rocky   with climbing (1) at 701
+514, 27 wet     with climbing (1) at 702
+514, 28 rocky   with climbing (1) at 703
+515, 28 rocky   with climbing (1) at 704
+516, 28 wet     with climbing (1) at 705
+517, 28 rocky   with climbing (1) at 706
+518, 28 wet     with climbing (1) at 707
+518, 29 rocky   with climbing (1) at 708
+519, 29 rocky   with climbing (1) at 709
+519, 30 wet     with climbing (1) at 710
+520, 30 rocky   with climbing (1) at 711
+520, 31 rocky   with climbing (1) at 712
+520, 32 wet     with climbing (1) at 713
+521, 32 wet     with climbing (1) at 714
+522, 32 wet     with climbing (1) at 715
+522, 33 wet     with climbing (1) at 716
+522, 34 rocky   with climbing (1) at 717
+523, 34 rocky   with climbing (1) at 718
+524, 34 wet     with climbing (1) at 719
+525, 34 wet     with climbing (1) at 720
+526, 34 rocky   with climbing (1) at 721
+527, 34 wet     with climbing (1) at 722
+528, 34 rocky   with climbing (1) at 723
+529, 34 rocky   with climbing (1) at 724
+530, 34 rocky   with climbing (1) at 725
+530, 33 wet     with climbing (1) at 726
+530, 32 rocky   with climbing (1) at 727
+531, 32 wet     with climbing (1) at 728
+531, 31 wet     with climbing (1) at 729
+532, 31 rocky   with climbing (1) at 730
+533, 31 rocky   with climbing (1) at 731
+534, 31 wet     with climbing (1) at 732
+535, 31 rocky   with climbing (1) at 733
+536, 31 rocky   with climbing (1) at 734
+537, 31 rocky   with climbing (1) at 735
+538, 31 rocky   with climbing (1) at 736
+539, 31 wet     with climbing (1) at 737
+540, 31 rocky   with climbing (1) at 738
+540, 32 rocky   with climbing (1) at 739
+540, 33 wet     with climbing (1) at 740
+540, 34 wet     with climbing (1) at 741
+540, 35 wet     with climbing (1) at 742
+541, 35 wet     with climbing (1) at 743
+542, 35 wet     with climbing (1) at 744
+542, 36 wet     with climbing (1) at 745
+543, 36 rocky   with climbing (1) at 746
+544, 36 wet     with climbing (1) at 747
+545, 36 wet     with climbing (1) at 748
+546, 36 wet     with climbing (1) at 749
+547, 36 wet     with climbing (1) at 750
+548, 36 wet     with climbing (1) at 751
+548, 35 rocky   with climbing (1) at 752
+549, 35 wet     with climbing (1) at 753
+550, 35 wet     with climbing (1) at 754
+551, 35 wet     with climbing (1) at 755
+552, 35 rocky   with climbing (1) at 756
+552, 36 wet     with climbing (1) at 757
+552, 37 wet     with climbing (1) at 758
+553, 37 wet     with climbing (1) at 759
+554, 37 wet     with climbing (1) at 760
+555, 37 wet     with climbing (1) at 761
+556, 37 wet     with climbing (1) at 762
+556, 36 rocky   with climbing (1) at 763
+557, 36 rocky   with climbing (1) at 764
+558, 36 wet     with climbing (1) at 765
+559, 36 wet     with climbing (1) at 766
+560, 36 rocky   with climbing (1) at 767
+560, 35 rocky   with climbing (1) at 768
+560, 34 wet     with climbing (1) at 769
+561, 34 wet     with climbing (1) at 770
+562, 34 wet     with climbing (1) at 771
+563, 34 rocky   with climbing (1) at 772
+563, 33 wet     with climbing (1) at 773
+564, 33 rocky   with climbing (1) at 774
+565, 33 wet     with climbing (1) at 775
+565, 32 wet     with climbing (1) at 776
+566, 32 rocky   with climbing (1) at 777
+567, 32 rocky   with climbing (1) at 778
+567, 31 wet     with climbing (1) at 779
+568, 31 wet     with climbing (1) at 780
+568, 30 wet     with climbing (1) at 781
+568, 29 wet     with climbing (1) at 782
+569, 29 wet     with climbing (1) at 783
+569, 28 wet     with climbing (1) at 784
+570, 28 wet     with climbing (1) at 785
+570, 27 rocky   with climbing (1) at 786
+571, 27 wet     with climbing (1) at 787
+571, 26 wet     with climbing (1) at 788
+571, 25 wet     with climbing (1) at 789
+572, 25 wet     with climbing (1) at 790
+573, 25 wet     with climbing (1) at 791
+574, 25 rocky   with climbing (1) at 792
+575, 25 wet     with climbing (1) at 793
+576, 25 wet     with climbing (1) at 794
+577, 25 wet     with climbing (1) at 795
+578, 25 wet     with climbing (1) at 796
+579, 25 rocky   with climbing (1) at 797
+579, 26 wet     with climbing (1) at 798
+580, 26 wet     with climbing (1) at 799
+581, 26 wet     with climbing (1) at 800
+582, 26 wet     with climbing (1) at 801
+583, 26 wet     with climbing (1) at 802
+584, 26 rocky   with climbing (1) at 803
+585, 26 wet     with climbing (1) at 804
+586, 26 wet     with climbing (1) at 805
+587, 26 rocky   with climbing (1) at 806
+588, 26 wet     with climbing (1) at 807
+589, 26 wet     with climbing (1) at 808
+590, 26 wet     with climbing (1) at 809
+591, 26 rocky   with climbing (1) at 810
+592, 26 rocky   with climbing (1) at 811
+593, 26 wet     with climbing (1) at 812
+594, 26 rocky   with climbing (1) at 813
+595, 26 rocky   with climbing (1) at 814
+596, 26 rocky   with climbing (1) at 815
+597, 26 wet     with climbing (1) at 816
+598, 26 rocky   with climbing (1) at 817
+599, 26 wet     with climbing (1) at 818
+600, 26 rocky   with climbing (1) at 819
+600, 27 wet     with climbing (1) at 820
+601, 27 wet     with climbing (1) at 821
+602, 27 rocky   with climbing (1) at 822
+602, 28 wet     with climbing (1) at 823
+602, 29 rocky   with climbing (1) at 824
+602, 30 wet     with climbing (1) at 825
+602, 31 rocky   with climbing (1) at 826
+603, 31 wet     with climbing (1) at 827
+604, 31 wet     with climbing (1) at 828
+605, 31 wet     with climbing (1) at 829
+605, 30 rocky   with climbing (1) at 830
+605, 29 rocky   with climbing (1) at 831
+606, 29 rocky   with climbing (1) at 832
+606, 28 wet     with climbing (1) at 833
+607, 28 wet     with climbing (1) at 834
+608, 28 rocky   with climbing (1) at 835
+609, 28 rocky   with climbing (1) at 836
+609, 29 wet     with climbing (1) at 837
+610, 29 wet     with climbing (1) at 838
+611, 29 rocky   with climbing (1) at 839
+612, 29 wet     with climbing (1) at 840
+612, 30 rocky   with climbing (1) at 841
+613, 30 wet     with climbing (1) at 842
+614, 30 rocky   with climbing (1) at 843
+614, 29 wet     with climbing (1) at 844
+614, 28 wet     with climbing (1) at 845
+614, 27 rocky   with climbing (1) at 846
+615, 27 rocky   with climbing (1) at 847
+616, 27 wet     with climbing (1) at 848
+617, 27 rocky   with climbing (1) at 849
+617, 26 rocky   with climbing (1) at 850
+618, 26 wet     with climbing (1) at 851
+619, 26 wet     with climbing (1) at 852
+619, 27 rocky   with climbing (1) at 853
+620, 27 rocky   with climbing (1) at 854
+621, 27 rocky   with climbing (1) at 855
+622, 27 rocky   with climbing (1) at 856
+623, 27 wet     with climbing (1) at 857
+624, 27 rocky   with climbing (1) at 858
+624, 28 wet     with climbing (1) at 859
+625, 28 wet     with climbing (1) at 860
+625, 29 wet     with climbing (1) at 861
+625, 30 wet     with climbing (1) at 862
+626, 30 rocky   with climbing (1) at 863
+627, 30 wet     with climbing (1) at 864
+628, 30 wet     with climbing (1) at 865
+629, 30 rocky   with climbing (1) at 866
+630, 30 rocky   with climbing (1) at 867
+631, 30 wet     with climbing (1) at 868
+631, 29 wet     with climbing (1) at 869
+632, 29 wet     with climbing (1) at 870
+633, 29 rocky   with climbing (1) at 871
+634, 29 rocky   with climbing (1) at 872
+635, 29 wet     with climbing (1) at 873
+635, 30 rocky   with climbing (1) at 874
+636, 30 rocky   with climbing (1) at 875
+637, 30 rocky   with climbing (1) at 876
+638, 30 rocky   with climbing (1) at 877
+639, 30 rocky   with climbing (1) at 878
+640, 30 rocky   with climbing (1) at 879
+641, 30 wet     with climbing (1) at 880
+642, 30 rocky   with climbing (1) at 881
+643, 30 rocky   with climbing (1) at 882
+644, 30 wet     with climbing (1) at 883
+645, 30 rocky   with climbing (1) at 884
+   switched tools from climbing  to torch
+646, 30 narrow  with torch    (2) at 892
+647, 30 rocky   with torch    (2) at 893
+648, 30 rocky   with torch    (2) at 894
+649, 30 rocky   with torch    (2) at 895
+649, 31 narrow  with torch    (2) at 896
+650, 31 narrow  with torch    (2) at 897
+651, 31 narrow  with torch    (2) at 898
+652, 31 narrow  with torch    (2) at 899
+653, 31 rocky   with torch    (2) at 900
+654, 31 narrow  with torch    (2) at 901
+655, 31 rocky   with torch    (2) at 902
+656, 31 narrow  with torch    (2) at 903
+657, 31 rocky   with torch    (2) at 904
+657, 32 narrow  with torch    (2) at 905
+658, 32 rocky   with torch    (2) at 906
+659, 32 narrow  with torch    (2) at 907
+660, 32 rocky   with torch    (2) at 908
+661, 32 rocky   with torch    (2) at 909
+662, 32 rocky   with torch    (2) at 910
+663, 32 rocky   with torch    (2) at 911
+664, 32 rocky   with torch    (2) at 912
+665, 32 rocky   with torch    (2) at 913
+666, 32 narrow  with torch    (2) at 914
+666, 31 rocky   with torch    (2) at 915
+666, 30 rocky   with torch    (2) at 916
+667, 30 narrow  with torch    (2) at 917
+668, 30 rocky   with torch    (2) at 918
+668, 29 rocky   with torch    (2) at 919
+668, 28 narrow  with torch    (2) at 920
+668, 27 narrow  with torch    (2) at 921
+669, 27 narrow  with torch    (2) at 922
+670, 27 narrow  with torch    (2) at 923
+670, 26 rocky   with torch    (2) at 924
+671, 26 rocky   with torch    (2) at 925
+672, 26 narrow  with torch    (2) at 926
+672, 25 narrow  with torch    (2) at 927
+673, 25 narrow  with torch    (2) at 928
+674, 25 rocky   with torch    (2) at 929
+675, 25 rocky   with torch    (2) at 930
+676, 25 narrow  with torch    (2) at 931
+677, 25 narrow  with torch    (2) at 932
+677, 24 narrow  with torch    (2) at 933
+677, 23 narrow  with torch    (2) at 934
+678, 23 rocky   with torch    (2) at 935
+678, 22 rocky   with torch    (2) at 936
+678, 21 narrow  with torch    (2) at 937
+679, 21 narrow  with torch    (2) at 938
+680, 21 rocky   with torch    (2) at 939
+681, 21 narrow  with torch    (2) at 940
+682, 21 narrow  with torch    (2) at 941
+683, 21 rocky   with torch    (2) at 942
+683, 20 rocky   with torch    (2) at 943
+684, 20 narrow  with torch    (2) at 944
+685, 20 narrow  with torch    (2) at 945
+686, 20 rocky   with torch    (2) at 946
+687, 20 rocky   with torch    (2) at 947
+688, 20 narrow  with torch    (2) at 948
+688, 21 narrow  with torch    (2) at 949
+689, 21 narrow  with torch    (2) at 950
+689, 22 rocky   with torch    (2) at 951
+690, 22 narrow  with torch    (2) at 952
+690, 23 rocky   with torch    (2) at 953
+690, 24 rocky   with torch    (2) at 954
+691, 24 narrow  with torch    (2) at 955
+692, 24 narrow  with torch    (2) at 956
+692, 23 narrow  with torch    (2) at 957
+693, 23 rocky   with torch    (2) at 958
+693, 22 rocky   with torch    (2) at 959
+694, 22 rocky   with torch    (2) at 960
+695, 22 rocky   with torch    (2) at 961
+696, 22 narrow  with torch    (2) at 962
+697, 22 rocky   with torch    (2) at 963
+698, 22 rocky   with torch    (2) at 964
+699, 22 narrow  with torch    (2) at 965
+700, 22 narrow  with torch    (2) at 966
+701, 22 rocky   with torch    (2) at 967
+702, 22 narrow  with torch    (2) at 968
+703, 22 rocky   with torch    (2) at 969
+703, 21 rocky   with torch    (2) at 970
+704, 21 rocky   with torch    (2) at 971
+705, 21 rocky   with torch    (2) at 972
+706, 21 narrow  with torch    (2) at 973
+707, 21 narrow  with torch    (2) at 974
+708, 21 narrow  with torch    (2) at 975
+709, 21 narrow  with torch    (2) at 976
+710, 21 rocky   with torch    (2) at 977
+711, 21 rocky   with torch    (2) at 978
+   switched tools from torch     to climbing
+712, 21 wet     with climbing (1) at 986
+713, 21 wet     with climbing (1) at 987
+714, 21 wet     with climbing (1) at 988
+715, 21 wet     with climbing (1) at 989
+716, 21 wet     with climbing (1) at 990
+717, 21 wet     with climbing (1) at 991
+718, 21 rocky   with climbing (1) at 992
+719, 21 wet     with climbing (1) at 993
+720, 21 wet     with climbing (1) at 994
+721, 21 rocky   with climbing (1) at 995
+722, 21 rocky   with climbing (1) at 996
+723, 21 rocky   with climbing (1) at 997
+723, 22 rocky   with climbing (1) at 998
+724, 22 rocky   with climbing (1) at 999
+725, 22 rocky   with climbing (1) at 1000
+726, 22 rocky   with climbing (1) at 1001
+726, 21 wet     with climbing (1) at 1002
+727, 21 rocky   with climbing (1) at 1003
+727, 20 rocky   with climbing (1) at 1004
+728, 20 wet     with climbing (1) at 1005
+729, 20 rocky   with climbing (1) at 1006
+730, 20 wet     with climbing (1) at 1007
+731, 20 rocky   with climbing (1) at 1008
+731, 19 wet     with climbing (1) at 1009
+732, 19 rocky   with climbing (1) at 1010
+732, 18 rocky   with climbing (1) at 1011
+733, 18 rocky   with climbing (1) at 1012
+734, 18 rocky   with climbing (1) at 1013
+735, 18 rocky   with climbing (1) at 1014
+736, 18 rocky   with climbing (1) at 1015
+736, 19 wet     with climbing (1) at 1016
+737, 19 wet     with climbing (1) at 1017
+738, 19 wet     with climbing (1) at 1018
+738, 18 rocky   with climbing (1) at 1019
+738, 17 wet     with climbing (1) at 1020
+738, 16 rocky   with climbing (1) at 1021
+739, 16 wet     with climbing (1) at 1022
+740, 16 wet     with climbing (1) at 1023
+741, 16 wet     with climbing (1) at 1024
+741, 15 rocky   with climbing (1) at 1025
+742, 15 wet     with climbing (1) at 1026
+743, 15 wet     with climbing (1) at 1027
+744, 15 rocky   with climbing (1) at 1028
+745, 15 rocky   with climbing (1) at 1029
+746, 15 rocky   with climbing (1) at 1030
+746, 14 rocky   with climbing (1) at 1031
+747, 14 rocky   with climbing (1) at 1032
+748, 14 rocky   with climbing (1) at 1033
+748, 13 rocky   with climbing (1) at 1034
+749, 13 rocky   with climbing (1) at 1035
+750, 13 rocky   with climbing (1) at 1036
+751, 13 wet     with climbing (1) at 1037
+751, 12 rocky   with climbing (1) at 1038
+752, 12 rocky   with climbing (1) at 1039
+752, 11 rocky   with climbing (1) at 1040
+753, 11 wet     with climbing (1) at 1041
+753, 10 wet     with climbing (1) at 1042
+   switched tools from climbing  to neither
+754, 10 narrow  with neither  (0) at 1050
+755, 10 narrow  with neither  (0) at 1051
+756, 10 narrow  with neither  (0) at 1052
+   switched tools from neither   to torch
+756,  9 rocky   with torch    (2) at 1060
+757,  9 narrow  with torch    (2) at 1061
+758,  9 rocky   with torch    (2) at 1062

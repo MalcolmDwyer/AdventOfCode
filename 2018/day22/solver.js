@@ -1,4 +1,6 @@
-import {FgRed, FgBlue, FgGreen, BgWhite, FgBlack, Reset} from '../../console'
+import {BgRed, BgCyan, BgYellow, BgWhite, FgBlack, Reset} from '../../console'
+import {astar, Graph} from '../../astar'
+import {flattenDeep} from 'lodash'
 
 /*
 depth: 8103
@@ -41,8 +43,7 @@ target: 9,758
 
   const nodeEquipment = [[1,2], [0, 1], [0, 2]]
 
-  // const FgRed = "\x1b[31m"
-  // const Reset = "\x1b[0m"
+  const otherEquipment = [[null, 2, 1], [1, 0, null], [2, null, 0]]
 
   const printMap = (type, path = [], my, mx) => {
     for(let y = 0; y <= my; y++) {
@@ -51,13 +52,13 @@ target: 9,758
         let p = path && path.find(n => n.y == y && n.x == x)
         if (p) {
           if (p.e == 0) {
-            str += FgRed
+            str += BgRed + FgBlack
           }
           else if (p.e == 1) {
-            str += FgBlue
+            str += BgCyan + FgBlack
           }
           else if (p.e == 2) {
-            str += FgGreen
+            str += BgYellow + FgBlack
           }
         }
         if (y == target.y && x == target.x) {
@@ -84,6 +85,18 @@ target: 9,758
     if (t == 2) { return 'narrow '}
   }
 
+  const treeFlat = (ys) => {
+    let l = []
+    Object.values(ys)
+      .map(y => Object.values(y)
+        .map(x => Object.values(x)
+          .map(e => l.push(e)
+        )
+      )
+    )
+    return l
+  }
+
   const costs = [
     // to_type: { from:equip }
     [ // to rocky
@@ -103,28 +116,6 @@ target: 9,758
     ]
   ]
 
-  const otherWay = [   // from_equip : { to_type: ... }
-    [ /* 0 - neither */
-      /* 0 - rocky  */ 7,
-      /* 1 - wet    */ 1,
-      /* 2 - narrow */ 1
-    ],
-    [ /* 1 - climbing */
-      /* 0 - rocky  */ 1,
-      /* 1 - wet    */ 1,
-      /* 2 - narrow */ 7
-    ],
-    [ /* 2 - torch  */
-      /* 0 - rocky  */ 1,
-      /* 1 - wet    */ 7,
-      /* 2 - narrow */ 1
-    ]
-  ]
-
-  // const costBuilder = (cost, y, x, dir) => ({
-  //   t: cost, distance: null, parent: null, y, x, dir
-  // })
-
   const costBuilder = ({t, y, x, d, e, distance = null}) => {
     // console.log('costBuilder', t, y, x, d, e)
     return {
@@ -133,11 +124,20 @@ target: 9,758
   }
 
 
-  // const depth = 8103
-  // const target = {x: 9, y: 758}
+  const depth = 8103
+  const target = {x: 9, y: 758, e: 2}
+  const maxX = 200
+  const maxY = 850
 
-  const depth = 510
-  const target = {x: 10, y: 10}
+  // const depth = 11739
+  // const target = {x: 11, y: 718, e: 2}
+  // const maxX = 100
+  // const maxY = 800
+
+  // const depth = 510
+  // const target = {x: 10, y: 10, e: 2}
+  // const maxX = 20
+  // const maxY = 20
 
   console.log('depth', depth)
 
@@ -147,11 +147,7 @@ target: 9,758
 
   let equippedNodes = []
 
-  // BFS info for transitions instead of cells
-  // let ups = []
-  // let downs = []
-  // let lefts = []
-  // let rights = []
+  let eqMapNodes = {} // [y][x][e]
 
   // let edges = []
 
@@ -160,18 +156,13 @@ target: 9,758
   // let printMap = true
   let mapView = []
 
-  for (let y = 0; y <= target.y + 50; y++) {
+  for (let y = 0; y <= maxY; y++) {
     // let str = ''
     geo[y] = []
     erosion[y] = []
     type[y] = []
 
-    // if (!edges[y]) {ups[y] = []}
-    // if (!lefts[y]) {lefts[y] = []}
-    // if (!downs[y]) {downs[y] = []}
-    // if (!rights[y]) {rights[y] = []}
-
-    for (let x = 0; x <= target.x + 50; x++) {
+    for (let x = 0; x <= maxX; x++) {
       if (x == target.x && y == target.y) {
         geo[y][x] = 0
       }
@@ -191,22 +182,6 @@ target: 9,758
       type[y][x] = erosion[y][x] % 3
       totalRisk += type[y][x]
 
-      // if (!y) {
-      //   edges.push(...[Infinity, Infinity, Infinity].map((t,e) => costBuilder({t, y, x, d:0, e})))
-      // }
-      // else {
-      //   edges.push(...costs[type[y-1][x]].map((t, e) => costBuilder({t, y, x, d:0, e})))
-      // }
-      //
-      // if (!x) {
-      //   edges.push(...[Infinity, Infinity, Infinity].map((t, e) => costBuilder({t, y, x, d:1, e})))
-      // }
-      // else {
-      //   edges.push(...costs[type[y][x-1]].map((t, e) => costBuilder({t, y, x, d:1, e})))
-      // }
-      // edges.push(...costs[type[y][x]].map((t, e) => costBuilder({t, y: y-1, x, d:2, e})))
-      // edges.push(...costs[type[y][x]].map((t, e) => costBuilder({t, y, x: x-1, d:3, e})))
-
       // console.log(`${x},${y} g:${geo[y][x]}  e: ${erosion[y][x]}  ty[e = ${type[y][x]}]}`)
       // if (printMap) {str += type[y][x] ? (type[y][x] == 1 ? '=' : '|') : '.'}
     }
@@ -216,6 +191,8 @@ target: 9,758
   // if (printMap) {
   //   mapView.forEach(line => console.log(line))
   // }
+
+  // printMap(type, [], maxY, maxX)
 
   equippedNodes.push(
     {
@@ -227,52 +204,123 @@ target: 9,758
     }
   )
 
-  let start = equippedNodes[0]
+  eqMapNodes[0] = {}
+  eqMapNodes[0][0] = {}
+  eqMapNodes[0][0][2] = {
+    x: 0,
+    y: 0,
+    e: 2, // torch
+    t: 0,
+    // visited: false
+  }
 
-  // edges = edges.map(edge => {
-  //   if (edge.x == 0 && edge.y == 0) {
-  //     edge.distance = 0
-  //   }
-  //   return edge
-  // })
+  console.log('eqMapNodes', JSON.stringify(eqMapNodes))
 
-  // ups[0][0] = ups[0][0].map(s => {
-  //   s.distance = 0;
-  //   return s;
-  // })
-  // lefts[0][0] = lefts[0][0].map(s => {
-  //   s.distance = 0;
-  //   return s;
-  // })
-  // lefts[0][0] = lefts[0][0].map(s => ({...s, distance: 0}))
+  // console.log('treeflat', treeFlat({'0': {'4': {'0': {a: '040'}, '1': {a: '041'}}}, '1': {'8': {'1': {a:'181'}}}}))
+  console.log('eqMapNodes', treeFlat(eqMapNodes))
 
-  // console.log(ups[0][0])
+  // let start = equippedNodes[0]
+  let start = eqMapNodes[0][0][2]
 
-  // const allEdgesForDistance = (distance) => (
-  //   edges.filter(s => s.distance == 0)
-  // )
-
-  // console.log(allEdgesForDistance(0))
   const dirs = [{dy: -1, dx: 0}, {dy: 0, dx: -1}, {dy: 0, dx: 1}, {dy: 1, dx: 0}]
 
   let t = 0
+
+
+  let bestPath = []
+
   let foundTarget = false
-  let bestPath
-  while(!foundTarget && t < 100) {
-    console.log('-------------t', t)
-    equippedNodes.filter(n => ((n.t == t) && !n.visited)).forEach(n => {
-      if (foundTarget) {
-        return
+
+  while(!foundTarget && t < 1050) {
+    if (!(t%100)) {
+      console.log(`${t}t --------- ${treeFlat(eqMapNodes).filter(n => n && (n.t == t)).length}/${treeFlat(eqMapNodes).filter(n => n).length}`)
+    }
+
+    treeFlat(eqMapNodes).filter(n => n && ((n.t == t))).forEach(n => {
+      // console.log('eqMapNode', n)
+      // if (foundTarget) {
+      //   return
+      // }
+      if ((n.x == target.x) && (n.y == target.y) && (n.e == target.e)) {
+        console.log('******************************************************************', t)
+        foundTarget = true
+        bestPath = [n]
+        let p = n.parent
+        while (p !== start) {
+          bestPath.unshift(p)
+          p = p.parent
+        }
+        bestPath.unshift(p)
+        // return
       }
-      console.log(`${t} : ${n.y},${n.x}  with ${n.e}`)
-      n.visited = true
+      // if (foundTarget) {
+      //   return
+      // }
+      // console.log(`${t} : ${n.y},${n.x}  with ${n.e}`)
+      n.v = 'V'
+
+      let nt = type[n.y][n.x]
+      // console.log('otherEquipment', otherEquipment[type[n.y][n.x]][n.e])
+      let neighbors = [
+        [n.y, n.x, otherEquipment[nt][n.e]]
+      ]
       dirs.forEach(dir => {
         let ny = n.y + dir.dy
         let nx = n.x + dir.dx
         if (nx < 0) { return }
         if (ny < 0) { return }
+        neighbors.push([ny, nx, n.e])
+      })
+      // console.log('neighbors', neighbors)
+      // console.log('all  ')
+      // eqMapNodes.forEach(nny => console.log(nny) )
 
-        if (n.y == target.y && n.x == target.x) {
+      neighbors.forEach(([y, x, e]) => {
+        if (!eqMapNodes[y]) {
+          eqMapNodes[y] = {}
+        }
+        if (!eqMapNodes[y][x]) {
+          eqMapNodes[y][x] = {}
+        }
+        if (!eqMapNodes[y][x][e]) {
+          let nt = type[y][x]
+          if ((typeof nt !== 'undefined') && nodeEquipment[nt].includes(e)) {
+            eqMapNodes[y][x][e] = {
+              x, y, e,
+              t: (e !== n.e) ? t + 7 : t + 1,
+              parent: n
+            }
+          }
+        }
+        // else {
+        //   console.log(`Already visited ${y}, ${x}, ${e}`)
+        // }
+      })
+      // console.log('after')
+      // eqMapNodes.forEach(nny => console.log(nny) )
+      // console.log('neighbors', neighbors)
+      // foundTarget = true
+
+
+    })
+
+    /*
+    equippedNodes.filter(n => ((n.t == t) && !n.visited)).forEach(n => {
+      if (foundTarget) {
+        return
+      }
+      // console.log(`${t} : ${n.y},${n.x}  with ${n.e}`)
+      n.visited = true
+
+
+
+      dirs.forEach(dir => {
+        let ny console.log('******************************************************************', t)= n.y + dir.dy
+        let nx = n.x + dir.dx
+        if (nx < 0) { return }
+        if (ny < 0) { return }
+
+        if (n.y == target.y && n.x == target.x && n.e == 2 && !foundTarget) {
           foundTarget = t
           console.log('******************************************************************')
 
@@ -287,14 +335,22 @@ target: 9,758
         }
 
         const nextType = type[n.y + dir.dy][n.x + dir.dx]
-        console.log(`  ${n.y},${n.x} => ${ny}, ${nx} type: ${nextType}`)
+        // console.log(`  ${n.y},${n.x} => ${ny}, ${nx} type: ${nextType}`)
         const nextEquipment = nodeEquipment[nextType]
-        console.log('      nextEquipment', nextEquipment)
+        if (!nextEquipment) {
+          return
+        }
 
-        nextEquipment.forEach(ne => {
-          if (!equippedNodes.some(n => (n.x == nx) && (n.y == ny) && (n.e == ne))) {
+        const thisAvailableEquipment = nodeEquipment[type[n.y][n.x]]
+        // console.log('thisAvailableEquipment:', thisAvailableEquipment, 'next...', nextEquipment, ' => ', nextEquipment.filter(ne => thisAvailableEquipment.includes(ne)))
+
+
+
+
+        nextEquipment.filter(ne => thisAvailableEquipment.includes(ne)).forEach(ne => {
+          if (!equippedNodes.find(n2 => (n2.x == nx) && (n2.y == ny) && (n2.e == ne))) {
             const nt = t + ((n.e == ne) ? 1 : 8)
-            console.log(`          ==> t${nt} with e${ne}`)
+            // console.log(`          ==> t${nt} with e${ne}`)
             equippedNodes.push(    {
               x: nx,
               y: ny,
@@ -304,15 +360,35 @@ target: 9,758
               parent: n
             })
           }
+          // else {
+          //   console.log(`already visited ${ny}, ${nx} with ${printEquip(ne)}`)
+          // }
         })
         // const nextCosts = costs[nextType]
         // console.log('nextCosts', nextCosts)
       })
     })
+    */
+
+    if (foundTarget) {
+      break
+    }
+
+
+
     t++
   }
 
-  console.log('found at t:', t)
+// part 2:
+// < 1062
+// < 1046
+// < 1045
+
+
+  // console.log('found at t:', t)
+  //
+  // // > 1078
+  //
 
   bestPath.forEach((n, ix, list) => {
     if (ix && list[ix-1] && (n.e !== list[ix-1].e)) {
@@ -321,17 +397,12 @@ target: 9,758
     console.log(`${n.y.toString().padStart(3, ' ')},${n.x.toString().padStart(3, ' ')} ${printType(type[n.y][n.x])} with ${printEquip(n.e)}(${n.e}) at ${n.t}`)
   })
 
-  printMap(type, bestPath, 14, 14)
-  // console.log(
-  //   ups.filter(s => s.distance == 0).length,
-  //   lefts.filter(s => s.distance == 0).length,
-  //   downs.filter(s => s.distance == 0).length,
-  //   rights.filter(s => s.distance == 0).length
-  // )
-  // console.log([
-  //   ...ups.filter(s => s.distance == 0),
-  //   ...lefts.filter(s => s.distance == 0),
-  //   ...downs.filter(s => s.distance == 0),
-  //   ...rights.filter(s => s.distance == 0)
-  // ])
+  printMap(type, bestPath, maxY, maxX)
+
+  if (eqMapNodes[target.y] && eqMapNodes[target.y][target.x]) {
+    console.log(`Found target at ${t}`)
+  }
+  else {
+    console.log('NO PATH at ', t)
+  }
 })()
