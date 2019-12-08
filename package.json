@@ -2,12 +2,14 @@
   "name": "adventofcode",
   "version": "1.0.0",
   "main": "index.js",
+  "type": "module",
   "repository": "git@github.com:MalcolmDwyer/AdventOfCode.git",
   "author": "Malcolm Dwyer <malcolm.dwyer@gmail.com>",
   "license": "MIT",
   "dependencies": {
     "immer": "^1.8.0",
-    "immutable": "^3.8.2"
+    "immutable": "^3.8.2",
+    "node-fetch": "^2.6.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.1.5",

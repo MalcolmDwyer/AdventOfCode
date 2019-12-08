@@ -1,4 +1,5 @@
 import fs from 'fs'
+import fetch from 'node-fetch';
 
 export const readFile = path => {
   return new Promise((resolve, reject) => {
@@ -24,4 +25,12 @@ export const lineReader = async (path = './input.txt') => {
   return file
     .split('\n')
     .filter(line => line)
+}
+
+export const gridReader = async (path = './input.txt') => {
+  const file = await readFile(path)
+  return file
+    .split('\n')
+    .filter(line => line)
+    .split('')
 }

@@ -1,4 +1,4 @@
 {
-  "presets": ["env"],
-  "plugins": ["transform-async-generator-functions"]
+  "presets": ["@babel/env"],
+  "plugins": ["@babel/plugin-proposal-async-generator-functions"]
 }
