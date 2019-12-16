@@ -7,8 +7,11 @@
   "author": "Malcolm Dwyer <malcolm.dwyer@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "colors": "^1.4.0",
     "immer": "^1.8.0",
     "immutable": "^3.8.2",
+    "mathjs": "^6.2.5",
+    "neo-blessed": "^0.2.0",
     "node-fetch": "^2.6.0"
   },
   "devDependencies": {

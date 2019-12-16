@@ -32,5 +32,6 @@ export const gridReader = async (path = './input.txt') => {
   return file
     .split('\n')
     .filter(line => line)
-    .split('')
+    .map(line => line.split(''));
+    // .split('')
 }
