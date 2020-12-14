@@ -44,10 +44,10 @@ const r = 0;
 
 class Map {
   d = {};
-  minX = -r; // Infinity;
-  maxX = r;  // -Infinity;
-  minY = -r; // Infinity;
-  maxY = r;  // -Infinity;
+  minX = Infinity;
+  maxX = -Infinity;
+  minY = Infinity;
+  maxY = -Infinity;
 
   lastWriteX = null;
   lsatWriteY = null
@@ -97,6 +97,7 @@ class Map {
   draw = (prefix = '') => {
     // console.log(this.d);
     console.log(`${prefix}-------------X[${this.minX} - ${this.maxX}]----Y[${this.minY} - ${this.maxY}]---`);
+    // console.log(`     0123456789_123456789_123456789_123456789_123456789_123456789_123456789_123456789_123456789_123456789`)
     for (let y = this.minY; y <= this.maxY; y++) {
       let str = '';
       if (this.d[y]) {
@@ -110,16 +111,17 @@ class Map {
           
         }
       }
+      // console.log(String(y - this.minY).padStart(4), str);
       console.log(str);
     }
   }
 
   neighbors = (x, y) => {
     let list = [];
-    if (this.d[y - 1] && this.d[y - 1][x]) {
+    if (this.d[y - 1][x]) {
       list.push(this.d[y - 1][x])
     }
-    if (this.d[y + 1] && this.d[y + 1][x]) {
+    if (this.d[y + 1][x]) {
       list.push(this.d[y + 1][x])
     }
     if (this.d[y][x - 1]) {
@@ -129,28 +131,6 @@ class Map {
       list.push(this.d[y][x + 1])
     }
     return list;
-  }
-
-  map = (callback) => {
-    let i = 0;
-    let out = [];
-    for (let y = this.minY; y <= this.maxY; y++) {
-      for (let x = this.minX; x <= this.maxX; x++) {
-        out.push(callback(this.d[y][x], x, y, i++));
-      }
-    }
-    return out;
-  }
-
-  reduce = (callback, initVal) => {
-    let val = initVal;
-    let i = 0;
-    for (let y = this.minY; y <= this.maxY; y++) {
-      for (let x = this.minX; x <= this.maxX; x++) {
-        val = callback(val, this.d[y][x], x, y, i++);
-      }
-    }
-    return val;
   }
 }
 

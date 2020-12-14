@@ -20,18 +20,19 @@ export const getLines = input => {
     .filter(line => line)
 }
 
-export const lineReader = async (path = './input.txt') => {
+export const lineReader = async (path = './input.txt', m = (v) => v, spl = '\n') => {
   const file = await readFile(path)
   return file
-    .split('\n')
+    .split(spl)
     .filter(line => line)
+    .map(m);
 }
 
-export const gridReader = async (path = './input.txt') => {
+export const gridReader = async (path = './input.txt', m = (v) => v, inLineSep = '') => {
   const file = await readFile(path)
   return file
     .split('\n')
     .filter(line => line)
-    .map(line => line.split(''));
-    // .split('')
+    .map(line => line.split(inLineSep))
+    .map(m);
 }

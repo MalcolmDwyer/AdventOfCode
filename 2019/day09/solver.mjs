@@ -1,6 +1,7 @@
 import { lineReader } from '../../common.mjs';
 // import computerGen from './computerGen.mjs';
-import computer from './computer.mjs';
+// import computer from './computer.mjs';
+import computer from '../day15/computer.mjs';
 
 
 async function solver() {
@@ -24,5 +25,5 @@ const part1 = async (program) => {
 
   let out = await computer(program, [2]);
 
-  console.log('out', out);
+  console.log('out', out.value);
 }

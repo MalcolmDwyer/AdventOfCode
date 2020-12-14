@@ -3,10 +3,17 @@ const computer = (program,
   {
     name = 'cpu',
     inputFn,
+    inputGenerator,
     inputPromise,
     inputArray,
     logObj = console,
+    rerun = false,
   }) => {
+
+  let inputIterator;
+  if (inputGenerator) {
+    inputIterator = inputGenerator();
+  }
 
   return async function* iter() {
     let codes = [...program];
@@ -35,7 +42,18 @@ const computer = (program,
       // logObj.log('parameterModes', parameterModes);
       if (opcode === 99) {
         // logObj.log(`Noun: ${noun} Verb: ${verb} ==> [0]: ${codes[0]}`);
-        break;
+        logObj.log(`${name} OP 99 - Terminating`);
+        if (rerun) {
+          yield 'RESTART';
+          relativeBase = 0;
+          pc = 0;
+          codes = [...program];
+          continue;
+        }
+        else {
+          yield 'DONE';
+          break;
+        }
       }
 
       let args = [];
@@ -56,12 +74,12 @@ const computer = (program,
           ? parameterModes.shift()
           : 0;
         if (mode === 2) { // relative mode
-          args.push(relativeBase + codes[pc + i])
+          args.push(relativeBase + (codes[pc + i] || 0))
           // logObj.log('           args', args);
         }
         else if (mode === 0) {
           // logObj.log(`      ++++ mode 0 position     ${codes[pc + i]} => []`)
-          args.push(codes[pc + i])
+          args.push(codes[pc + i] || 0)
           // logObj.log('           args', args);
         }
         else {
@@ -83,20 +101,33 @@ const computer = (program,
       }
       else if (opcode === 3) {
         let value;
-        if (typeof inputFn === 'function') {
+        if (inputIterator) {
+          const inputGeneratorResponse = inputIterator.next();
+          logObj.log(inputGeneratorResponse);
+          if (inputGeneratorResponse.done) {
+            logObj.log("************************ INPUT GENERATOR IS DONE, BUT CPU IS STILL ASKING ******************");
+          }
+          else {
+            value = inputGeneratorResponse.value;
+            logObj.log(`${name} INPUT (generator) value: ${value}`);
+          }
+        }
+        else if (typeof inputFn === 'function') {
           value = inputFn();
-          // logObj.log('inputFn <=', value);
+          logObj.log('inputFn <=', value);
         }
         else if (inputPromise) {
           value = await inputPromise();
-          logObj.log('inputFn <=', value);
+          logObj.log(`${name} inputPromise <= ${value}`);
         }
         else if (inputArray) {
           value = inputArray.shift();
         }
         else {
-        // // logObj.log(`INPUT waiting`)
+          // logObj.log(`${name} waiting for input`)
           value = yield 'INPUT';
+          // let value = yield;
+          // logObj.log(`${name}  -- yield got value [${value}]`)
         }
         // logObj.log(`${name} INPUT (next) ${value} ==> &${args[0]}`)
         codes[args[0]] = value;
@@ -106,7 +137,7 @@ const computer = (program,
         // logObj.log(`${name} OUTPUT *${args[0]} -> ${codes[args[0]]}  =====> output`)
         // outputs.push(codes[args[0]]);
         // logObj.log(`${name} Yielding ${codes[args[0]]}`);
-        let noValue = yield codes[args[0]];
+        yield (codes[args[0]]);
 
         // if (noValue) {
         //   console.error(`Got [${noValue}] from output yield. *************************************************`)
@@ -116,29 +147,29 @@ const computer = (program,
       else if (opcode === 5) { // jump-if-true
         // logObj.log(`jump-if-true ${codes[args[0]]} ?  => pc = ${args[1]}`);
         if (codes[args[0]]) {
-          pc = codes[args[1]];
+          pc = codes[args[1]] || 0;
           continue;
         }
       }
       else if (opcode === 6) { // jump-if-false
-        if (codes[args[0]] === 0) {
-          pc = codes[args[1]];
+        if (codes[args[0]] == 0) {
+          pc = codes[args[1]] || 0;
           continue;
         }
       }
       else if (opcode === 7) { // less-than
-        codes[args[2]] = (codes[args[0]] < codes[args[1]])
+        codes[args[2]] = ((codes[args[0]] || 0) < (codes[args[1]] || 0))
           ? 1
           : 0;
       }
       else if (opcode === 8) { // equals
-        codes[args[2]] = (codes[args[0]] === codes[args[1]])
+        codes[args[2]] = ((codes[args[0]] || 0) === (codes[args[1]] || 0))
           ? 1
           : 0;
       }
       else if (opcode === 9) {
         // logObj.log('Adj Rel', relativeBase, codes[args[0]]);
-        relativeBase = relativeBase + codes[args[0]];
+        relativeBase = relativeBase + (codes[args[0]] || 0);
       }
       else {
         logObj.log(' ****************************** bad instruction', opcode);
@@ -151,7 +182,9 @@ const computer = (program,
 
     // logObj.log('codes after', codes);
 
-    return outputs;
+    // return outputs;
+    // return null;
+    return;
 
   }
 }

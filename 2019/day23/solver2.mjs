@@ -14,26 +14,6 @@ display.key(['escape', 'q', 'C-c'], function(ch, key) {
   return process.exit(0);
 });
 
-// let boxDisplay = blessed.log({
-//   // left: 0,
-//   // top: 0,
-//   width: 40,
-//   height: '100%',
-//   border: {
-//     type: 'line',
-//   },
-//   style: {
-//     fg: 'white',
-//     bg: 'blue',
-//     border: {
-//       fg: '#f0f0f0'
-//     },
-//     // hover: {
-//     //   bg: 'green'
-//     // }
-//   }
-// });
-
 let screenLog = blessed.log({
   top: 0,
   left: 120,
@@ -60,11 +40,6 @@ let screenLog = blessed.log({
   },
 });
 
-// screenLog.on('click', () => {
-//   screenLog.log('clicked');
-//   screenLog.focus();
-// });
-
 let tLog = blessed.log({
   border: {
     type: 'line',
@@ -85,13 +60,10 @@ let outLog = blessed.log({
   width: 50,
 });
 
-// display.append(boxDisplay);
 display.append(screenLog);
 display.append(tLog);
 display.append(outLog);
 screenLog.focus();
-// boxDisplay.focus();
-// display.render();
 
 const solver = async () => {
   const file = 'input.txt';
@@ -109,9 +81,11 @@ const run1 = async (program, part2) => {
   let executionQueue = [0];
   let boxes = [];
   let queueBoxes = [];
+  let idleCount = 0;
 
   let nat = {};
   let sentNats = new Set();
+  let prevNatY = -Infinity;
 
   for (let cpuNum = 0; cpuNum < 50; cpuNum++) {
     inputQueues[cpuNum] = [cpuNum];
@@ -149,13 +123,13 @@ const run1 = async (program, part2) => {
     display.render();
   }
 
-  let updateDisplay = (t, didSomething) => {
+  let updateDisplay = (t) => {
     for (let cpuNum = 0; cpuNum < 50; cpuNum++) {
       queueBoxes[cpuNum].setItems(inputQueues[cpuNum].map(n => `${n}`));
       // boxes[executionQueue[0]].focus();
       display.render();
     }
-    tLog.setLine(0, `${t} ${didSomething ? 'y' : 'n'}`);
+    tLog.setLine(0, `${t} ${idleCount}`);
     
   }
 
@@ -164,134 +138,99 @@ const run1 = async (program, part2) => {
   let done = false;
   let t = 0;
 
-  while (!done && t < 50) {
+  let cpusToRun = new Set(Array(50).fill().map((n,ix) => ix));
+
+  const runCycle = async (cpuNum) => {
     let didSomething = false;
-    screenLog.log(`t ${t} ----------------------`);
-    for (let cpuNum = 0; cpuNum < 50; cpuNum++) {
-    // for (let cpuNum of [0, 21, 25, 46]) {
-      // screenLog.log(`CPU ${cpuNum} ------`);
-      // boxes[cpuNum].focus();
-      display.render();
-      let nextA;
-      setTimeout(async () => {
-        try {
+    try {
+      // screenLog.log(` CPU(d) ${cpuNum}---`);
+      let a;
 
-          // screenLog.log(` CPU(d) ${cpuNum}---`);
-          let a;
-
-          a = await cpus[cpuNum].next(-1);
-          while (a.value === 'INPUT') {
-            // screenLog.log(`cpu_${cpuNum}    INPUT WHILE LOOP`);
-            if (a.value !== 'INPUT') {
-              break;
-            }
-            if (inputQueues[cpuNum].length) {
-              const val = inputQueues[cpuNum].shift();
-              // screenLog.log(`cpu_${cpuNum} sending in -> ${val}`);
-              a = await cpus[cpuNum].next(val);
-              queueBoxes[cpuNum].setItems(inputQueues[cpuNum].map(n => `${n}`));
-              await delay(0);
-              display.render();
-              // screenLog.log(`cpu_${cpuNum} a after sending in ${val} -> ${a.value}`);
-              didSomething = true;
-            }
-            else {
-              // screenLog.log(`cpu_${cpuNum} input queue empty, sending in -> -1`);
-              a = await cpus[cpuNum].next(-1);
-              break;
-            }
-          }
-
-          // screenLog.log(`cpu_${cpuNum} a after handling inputs: ${a.value}`);
-          if (a.value === 'INPUT') {
-            return;
-          }
-
-          let x = await cpus[cpuNum].next();
-          // await delay(1005);
-          let y = await cpus[cpuNum].next(-1);
-          // await delay(1005);
-
-          if (a.value && a.value === 255) {
-            done = true;
-            outLog.setLine(0, `   [${x.value},${y.value}]`)
-            nat.x = x.value;
-            nat.y = y.value;
-          }
-
-          screenLog.log(`cpu_${cpuNum} pushing to ${a.value} queue: ${x.value},${y.value}`);
-          if (a.value < 0 || a.value > 49) {
-            // throw new Error('bad push');
-            return;
-          }
-          inputQueues[a.value].push(x.value);
-          inputQueues[a.value].push(y.value);
-          didSomething = true;
-          queueBoxes[cpuNum].setItems(inputQueues[cpuNum].map(n => `${n}`));
-          tLog.setLine(0, `${t} ${didSomething ? 'y' : 'n'}`);
-          await delay(1);
-          display.render();
-          
-
-
-
-          // screenLog.log(` CPU(d) ${cpuNum}---`);
-          // let a = await cpus[cpuNum].next(-1);
-          // screenLog.log('a:');
-          // screenLog.log(a);
-          // if (a.value && a.value === 'INPUT') {
-          //   nextA = await handleInput(cpuNum);
-          //   if (nextA.value === 'INPUT') {
-          //     return;
-          //   }
-          //   screenLog.log(`cpu_${cpuNum} nextA ${nextA.value}`);
-          //   a = nextA;
-          // }
-          // // else {
-          //   if (a.value && a.value === 255) {
-          //     done = true;
-          //   }
-          //   else if (a.value) {
-          //     let x = await cpus[cpuNum].next();
-          //     await delay(1005);
-          //     let y = await cpus[cpuNum].next();
-          //     await delay(1005);
-          //     if (!x || !y) {
-          //       screenLog('no x / y');
-          //     }
-          //     screenLog.log(`pushing to ${a.value} queue: ${x.value},${y.value}`);
-          //     if (a.value < 0 || a.value > 49) {
-          //       throw new Error('bad push');
-          //     }
-          //     inputQueues[a.value].push(x.value);
-          //     inputQueues[a.value].push(y.value);
-          //     queueBoxes[cpuNum].setItems(inputQueues[cpuNum].map(n => `${n}`));
-          //     display.render();
-          //     await delay(0);
-          //   }
-          //   else {
-          //     screenLog.log(`cpu_${cpuNum} no a`);
-          //   }
-            
-          // // }
-          // screenLog.log(`cpu_${cpuNum} yielded ${a.value}`);
-          // await delay(1005);
-        } catch(e) {
-          screenLog.log(`ERROR ${e}`)
+      a = await cpus[cpuNum].next(-1);
+      while (a.value === 'INPUT') {
+        // screenLog.log(`cpu_${cpuNum}    INPUT WHILE LOOP`);
+        if (a.value !== 'INPUT') {
+          cpusToRun.add(cpuNum);
+          break;
         }
-      }, 0);
+        if (inputQueues[cpuNum].length) {
+          const val = inputQueues[cpuNum].shift();
+          // screenLog.log(`cpu_${cpuNum} sending in -> ${val}`);
+          a = await cpus[cpuNum].next(val);
+          // queueBoxes[cpuNum].setItems(inputQueues[cpuNum].map(n => `${n}`));
+          // screenLog.log(`cpu_${cpuNum} a after sending in ${val} -> ${a.value}`);
+          didSomething = true;
+        }
+        else {
+          // screenLog.log(`cpu_${cpuNum} input queue empty, sending in -> -1`);
+          a = await cpus[cpuNum].next(-1);
+          cpusToRun.delete(cpuNum);
+          break;
+        }
+      }
+
+      // screenLog.log(`cpu_${cpuNum} a after handling inputs: ${a.value}`);
+      if (a.value === 'INPUT') {
+        return didSomething;
+      }
+
+      let x = await cpus[cpuNum].next();
+      let y = await cpus[cpuNum].next(-1);
+
+      if (a.value && a.value === 255) {
+        if (!part2) {
+          done = true;
+        }
+        outLog.setLine(0, `   [${x.value},${y.value}]  prev: [${prevNatY}]`)
+        nat.x = x.value;
+        nat.y = y.value;
+        return didSomething;
+      }
+
+      screenLog.log(`cpu_${cpuNum} pushing to ${a.value} queue: ${x.value},${y.value}`);
+
+      inputQueues[a.value].push(x.value);
+      inputQueues[a.value].push(y.value);
+      didSomething = true;
+      queueBoxes[cpuNum].setItems(inputQueues[cpuNum].map(n => `${n}`));
+      cpusToRun.add(a.value);
+      cpusToRun.add(cpuNum);
+      tLog.setLine(0, `${t} ${idleCount}`);
+      return didSomething;
+    } catch(e) {
+      screenLog.log(`ERROR ${e}`)
+      return didSomething;
+    }
+  }
+
+  while (!done && t < Infinity) {
+    screenLog.log(`t ${t} ---------------------- ${Array.from(cpusToRun).join(',')}`);
+
+    let didThings = await Promise.all(Array.from(cpusToRun).map(async cpuNum => {
+      return await runCycle(cpuNum);
+    }));
+
+    if (!didThings.length) {
+      idleCount++;
+    }
+    else {
+      idleCount = 0;
     }
 
-    // if (t && !didSomething) {
-    //   done = true;
-    //   screenLog.log(`t:${t} did nothing`)
-    // }
+    if (idleCount > 5) {
+      inputQueues[0].push(nat.x);
+      inputQueues[0].push(nat.y);
+      cpusToRun.add(0);
+      screenLog.log(`NAT pushing to 0 queue: ${nat.x},${nat.y}`);
+      if (nat.y === prevNatY) {
+        done = true;
+        screenLog.log(`Repeated Y sent from NAT: ${nat.y}`)
+      }
+      prevNatY = nat.y;
+    }
 
-    // queueBoxes[0].setItems([...inputQueues[0].map(n => `${n}`), `${t}`])
-    // display.render();
-    // screenLog.focus();
-    updateDisplay(t, didSomething);
-    await delay(500);
+    updateDisplay(t);
+    await delay(0); // allow display to draw;
     t++;
   }
 
@@ -302,3 +241,6 @@ const run1 = async (program, part2) => {
 }
 
 solver();
+
+
+// Part 2: not 16674
