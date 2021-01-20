@@ -8,7 +8,7 @@
   "license": "MIT",
   "dependencies": {
     "colors": "^1.4.0",
-    "immer": "^1.8.0",
+    "immer": "^8.0.1",
     "immutable": "^3.8.2",
     "mathjs": "^6.2.5",
     "neo-blessed": "^0.2.0",
