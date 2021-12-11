@@ -37,6 +37,14 @@ export const gridReader = async (path = './input.txt', m = (v) => v, inLineSep =
     .map(m);
 }
 
+export const gridReader2 = async (path = './input.txt', m = (v) => v, inLineSep = '') => {
+  const file = await readFile(path)
+  return file
+    .split('\n')
+    .filter(line => line)
+    .map(line => line.split(inLineSep).map(m));
+}
+
 export const minMax = (list, accessor) => {
   // accessor iterates over list items and can return single value or array to check
   //
@@ -91,8 +99,15 @@ export const prepGrid = ({minX, maxX, minY, maxY}, initial = 0) => {
   return grid;
 }
 
-export const printGrid = (grid, spacer = '') => {
+export const printGrid = (grid, spacer = '', pad = 0) => {
   grid.forEach((row) => {
-    console.log(row.join(spacer));
+    console.log(row.map((c) => c.toString().padStart(pad, ' ')).join(spacer));
   });
 };
+
+// Addition "factorial"
+// n + (n-1) + (n-2) + ... + 1 <=> (n * (n+1)) / 2
+export const gaussSum = (n) => {
+  return (n * (n + 1)) / 2;
+};
+
