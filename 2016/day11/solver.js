@@ -28,8 +28,8 @@ let realGoal2 = Immutable.fromJS(
 
 
 // let [labels, input, goal] = [testLabels, testInput, testGoal];
-let [labels, input, goal] = [realLabels, realInput, realGoal];
-// let [labels, input, goal] = [realLabels2, realInput2, realGoal2];
+// let [labels, input, goal] = [realLabels, realInput, realGoal];
+let [labels, input, goal] = [realLabels2, realInput2, realGoal2];
 
 let nodePrinter = (node, ix) => {
 
@@ -185,8 +185,10 @@ var {path, status, cost} = astar({
 console.log('status: ' + status);
 
 if (status == 'success') {
-  path.map(nodePrinter);
-  path.map(node => console.log(node.toJS()))
-  console.log();
+  // path.map(nodePrinter);
+  // path.map(node => console.log(node.toJS()))
+  // console.log();
   console.log('steps: ' + (path.length - 1));
 }
+
+// 49

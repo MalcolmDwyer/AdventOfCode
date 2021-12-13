@@ -1,5 +1,5 @@
 import path from 'path'
-import {readFile, getLines} from '../../common'
+import {readFile, getLines} from '../../common.mjs'
 
 readFile(path.resolve(process.argv[2] || 'input.txt'))
   .then(data => {
