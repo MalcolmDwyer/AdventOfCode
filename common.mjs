@@ -92,7 +92,7 @@ export const minMax = (list, accessor) => {
  * gridsMinMaxFromCoords
  * Takes `coords` array of `whatevers`, and using the `options.xAccessor` and `options.yAccessor`
  * (which default to `(c) => c.x` and `(c) => c.y`) it returns an gridBounds object
- * with minX, maxX, minY, maxY. `options.zeroMin` will override `xMin`/`yMin` if they
+ * with minX, maxX, minY, maxY. `options.zeroMin` will override `minX`/`minY` if they
  * are greater than zero, and use `0` instead.
  * 
  * @param {*} coords 

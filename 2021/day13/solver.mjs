@@ -57,7 +57,7 @@ const solver = async () => {
       folds.push({
         x: l[11] === 'x' ? true : false,
         y: l[11] === 'y' ? true : false,
-        value: parseInt(l.split('').slice(13).join('')),
+        value: parseInt(l.slice(13)),
       })
     }
     else {
