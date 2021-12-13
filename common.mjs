@@ -88,6 +88,40 @@ export const minMax = (list, accessor) => {
   return {min, max, minIndex, maxIndex, minSubIndex, maxSubIndex};
 };
 
+/**
+ * gridsMinMaxFromCoords
+ * Takes `coords` array of `whatevers`, and using the `options.xAccessor` and `options.yAccessor`
+ * (which default to `(c) => c.x` and `(c) => c.y`) it returns an gridBounds object
+ * with minX, maxX, minY, maxY. `options.zeroMin` will override `xMin`/`yMin` if they
+ * are greater than zero, and use `0` instead.
+ * 
+ * @param {*} coords 
+ * @param {*} options 
+ * @returns gridBounds
+ */
+export const gridsMinMaxFromCoords = (coords, {
+  xAccessor = (c) => c.x,
+  yAccessor = (c) => c.y,
+  zeroMin = false, // if mins are greater than 0, use 0 instead
+} = {}) => {
+  const {min: minX, max: maxX} = minMax(
+    coords, xAccessor
+  );
+
+  const {min: minY, max: maxY} = minMax(
+    coords, yAccessor
+  );
+
+  const gridBounds = {
+    minX: zeroMin ? Math.min(0, minX) : minX,
+    maxX,
+    minY: zeroMin ? Math.min(0, minY) : minY,
+    maxY,
+  };
+
+  return gridBounds;
+}
+
 export const prepGrid = ({minX, maxX, minY, maxY}, initial = 0) => {
   const grid = [];
   for (let i = minY; i <= minY + maxY; i++) {
@@ -104,6 +138,16 @@ export const printGrid = (grid, spacer = '', pad = 0) => {
     console.log(row.map((c) => c.toString().padStart(pad, ' ')).join(spacer));
   });
 };
+
+export const gridForEach = (gridBounds, fn) => {
+  const { minX, maxX, minY, maxY } = gridBounds;
+
+  for (let y = minY; y <= maxY; y++) {
+    for (let x = minX; x <= maxX; x++) {
+      fn({x, y});
+    }
+  }
+}
 
 // Addition "factorial"
 // n + (n-1) + (n-2) + ... + 1 <=> (n * (n+1)) / 2
