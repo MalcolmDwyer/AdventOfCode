@@ -1,0 +1,23 @@
+.target-graph {
+
+  td {
+    width: 2px;
+    height: 2px;
+    border-width: 1px;
+    // margin-top: 1px;
+    // margin-right: 1px;
+    background-color: #222;
+
+    &.target-area {
+      background-color: #f00;
+    }
+
+    &.start {
+      background-color: #22f;
+    }
+
+    &.arc {
+      background-color: #2f2;
+    }
+  }
+}

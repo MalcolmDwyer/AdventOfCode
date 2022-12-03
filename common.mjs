@@ -14,6 +14,20 @@ export const readFile = path => {
   })
 }
 
+export const writeFile = (path, data) => {
+  return new Promise((resolve, reject) => {
+    fs.writeFile(path, data, {encoding: 'utf8'}, (err, data) => {
+      if (err) {
+        reject(err)
+      }
+      else {
+        resolve(data)
+      }
+    })
+  })
+}
+
+
 export const getLines = input => {
   return input
     .split('\n')
@@ -27,6 +41,11 @@ export const lineReader = async (path = './input.txt', m = (v) => v, spl = '\n')
     .filter(line => line)
     .map(m);
 }
+
+export const jsonReader = async(path = './input.json') => {
+  const file = await readFile(path);
+  return JSON.parse(file);
+};
 
 export const gridReader = async (path = './input.txt', m = (v) => v, inLineSep = '') => {
   const file = await readFile(path)
@@ -42,7 +61,7 @@ export const gridReader2 = async (path = './input.txt', m = (v) => v, inLineSep 
   return file
     .split('\n')
     .filter(line => line)
-    .map(line => line.split(inLineSep).map(m));
+    .map((line, y) => line.split(inLineSep).map((c, x) => m(c, {x, y})));
 }
 
 export const minMax = (list, accessor) => {
@@ -133,10 +152,35 @@ export const prepGrid = ({minX, maxX, minY, maxY}, initial = 0) => {
   return grid;
 }
 
-export const printGrid = (grid, spacer = '', pad = 0) => {
+export const printGrid = (
+  grid,
+  spacer = '',
+  pad = 0,
+) => {
   grid.forEach((row) => {
     console.log(row.map((c) => c.toString().padStart(pad, ' ')).join(spacer));
   });
+};
+
+export const printGrid2 = (grid, {
+  spacer = '',
+  pad = 0,
+  cellPrint = (c) => c,
+} = {}) => {
+  grid.forEach((row) => {
+    console.log(row.map(cellPrint).map((c) => c.toString().padStart(pad, ' ')).join(spacer));
+  });
+}
+
+export const printFlatGrid = (grid, gridBounds, {fn, rowJoin = ''}) => {
+  const { minX, maxX, minY, maxY } = gridBounds;
+  for (let y = minY; y <= maxY; y++) {
+    let row = [];
+    for (let x = minX; x <= maxX; x++) {
+      row.push(fn(grid.find(({x: gx, y: gy}) => gx == x && gy == y)))
+    }
+    console.log(row.join(''))
+  }
 };
 
 export const gridForEach = (gridBounds, fn) => {

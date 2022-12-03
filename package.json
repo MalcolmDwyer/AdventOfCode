@@ -12,6 +12,7 @@
     "immer": "^9.0.6",
     "immutable": "^3.8.2",
     "mathjs": "^7.5.1",
+    "memoizee": "^0.4.15",
     "neo-blessed": "^0.2.0",
     "node-fetch": "^2.6.1",
     "prompts": "^2.3.0"
