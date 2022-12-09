@@ -48,12 +48,12 @@ const solver2 = async (length = 10) => {
         let ox = rope[r-1].x - rope[r].x;
         let oy = rope[r-1].y - rope[r].y;
 
-        let ax = ox / Math.abs(ox);
-        let ay = oy / Math.abs(oy);
+        let nx = ox / Math.abs(ox);
+        let ny = oy / Math.abs(oy);
 
         if (Math.abs(ox) > 1 || Math.abs(oy) > 1) {
-          rope[r].x += ox ? ax : 0;
-          rope[r].y += oy ? ay : 0;
+          rope[r].x += ox ? nx : 0;
+          rope[r].y += oy ? ny : 0;
         }
       }
 
