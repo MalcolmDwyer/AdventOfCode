@@ -1,36 +1,28 @@
-import { lineReader, gridReader } from '../../common.mjs';
+import { lineReader } from '../../common.mjs';
 
 const parseLine = line => {
   const distance = parseInt(line.slice(2));
   if (line[0] === 'R') {
     return {
-      dx: distance,
+      dx: 1,
       dy: 0,
-      nx: 1,
-      ny: 0,
     }
   }
   if (line[0] === 'L') {
     return {
-      dx: -distance,
+      dx: -1,
       dy: 0,
-      nx: -1,
-      ny: 0,
     }
   }
   if (line[0] === 'U') {
     return {
       dx: 0,
-      dy: distance,
-      nx: 0,
-      ny: 1,
+      dy: 1,
     }
   }
   return {
     dx: 0,
-    dy: -distance,
-    nx: 0,
-    ny: -1,
+    dy: -1,
   }
 };
 
@@ -42,26 +34,26 @@ const solver2 = async (length = 10) => {
     rope[r] = {x: 0, y: 0};
   };
 
-  let visited = new Set(['0__0']);
+  let visited = new Set();
 
   lines.forEach((line) => {
-    let {nx, ny} = parseLine(line);
+    let {dx, dy} = parseLine(line);
     let n = parseInt(line.slice(2));
     while (n) {
 
-      rope[0].x += nx;
-      rope[0].y += ny;
+      rope[0].x += dx;
+      rope[0].y += dy;
 
       for (let r = 1; r < rope.length; r++) {
         let ox = rope[r-1].x - rope[r].x;
         let oy = rope[r-1].y - rope[r].y;
 
-        let nx = ox / Math.abs(ox);
-        let ny = oy / Math.abs(oy);
+        let ax = ox / Math.abs(ox);
+        let ay = oy / Math.abs(oy);
 
         if (Math.abs(ox) > 1 || Math.abs(oy) > 1) {
-          rope[r].x += ox ? nx : 0;
-          rope[r].y += oy ? ny : 0;
+          rope[r].x += ox ? ax : 0;
+          rope[r].y += oy ? ay : 0;
         }
       }
 
