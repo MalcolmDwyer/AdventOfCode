@@ -1,6 +1,6 @@
 import { lineReader } from '../../common.mjs';
 
-const parseLine = line => eval(line);
+const parseLine = line => JSON.parse(line);
 
 const compare = (a, b) => {
   if (Number.isFinite(a) && Number.isFinite(b)) {
