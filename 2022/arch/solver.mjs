@@ -23,18 +23,3 @@ const solver2 = async () => {
 
 await solver();
 await solver2();
-
-/*
-
-for (let i = 0; i < X; i++) {
-
-}
-
-for (let i = 0; i < X; i++) {
-  for (let j = 0; j < Y; j++) {
-  
-  }
-}
-
-
-*/
