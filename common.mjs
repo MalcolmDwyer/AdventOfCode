@@ -56,7 +56,7 @@ export const gridReader = async (path = './input.txt', m = (v) => v, inLineSep =
     .map(m);
 }
 
-export const gridReader2 = async (path = './input.txt', m = (v) => v, inLineSep = '') => {
+export const gridReader2 = async (path = './input.txt', m = (v, {x, y}) => ({v, x, y}), inLineSep = '') => {
   const file = await readFile(path)
   return file
     .split('\n')
@@ -198,4 +198,66 @@ export const gridForEach = (gridBounds, fn) => {
 export const gaussSum = (n) => {
   return (n * (n + 1)) / 2;
 };
+
+
+export const rangeOverlaps = (base, test) => {
+  // console.group(`getOverlap check: [${base.b}, ${base.t}]  range: [${test.b}, ${test.t}]`);
+  let aAndB = [];
+  let aNotB = [];
+  let bNotA = [];
+  //       ********
+  // a     +++           1 -> 2
+  // b       +++         1 -> 3
+  // c         ++++      1 -> 2
+  // d     ++++++++      1 -> 1
+  // e         ++++++++  1 -> 2 + add unmapped
+  // f  +++++++          1 -> 2 + add unmapped
+  // g     ++++++++++    1 -> 1 + add unmapped
+  // h  +++++++++++      1 -> 1 + add unmapped
+  // i  ++++++++++++++   1 -> 1 + add 2 unmapped
+  // j  ++++             (f)
+  // k            +++    (e)
+  // l     +
+  // m            +
+
+  if (test.b > base.t || test.t < base.b) {
+    aNotB.push({b: base.b, t: base.t });
+    bNotA.push({b: test.b, t: test.t });
+  }
+  else if (test.b <= base.b) { // f, h, i  | a, g, d
+    if (test.b < base.b) { // f h i
+      bNotA.push({b: test.b, t: base.b - 1});
+    }
+    
+    if (test.t < base.t) { // a, f
+      aAndB.push({b: base.b, t: test.t});
+      aNotB.push({b: test.t + 1, t: base.t});
+    }
+    else if (test.t === base.t) { // d, h
+      aAndB.push({b: base.b, t: test.t});
+    }
+    else if (test.t > base.t) { // i, g
+      aAndB.push({b: base.b, t: base.t});
+      bNotA.push({b: base.t + 1, t: test.t})
+    }
+  }
+  else { // b, c, e, k
+    aNotB.push({b: base.b, t: test.b - 1});
+    aAndB.push({b: test.b, t: Math.min(base.t, test.t)});
+
+    if (test.t < base.t) {
+      aNotB.push({b: test.t + 1, t: base.t});
+    }
+    else if (test.t > base.t) {
+      bNotA.push({b: base.t + 1, t: test.t})
+    }
+
+  }
+
+  return {
+    aAndB,
+    aNotB,
+    bNotA,
+  }
+}
 
